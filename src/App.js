@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
+import { useEffect, useState } from "react";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -56,6 +57,20 @@ const SearchResults = () => {
 // End of testing section
 
 function App() {
+  /* create a state for the upcoming movies:  */
+  const [ upComingMovies, setUpComingMovies ] = useState([]);
+
+  /* Fetch the movie details, using the function from fetch-functions.js */
+  useEffect(
+    () => {
+      let upComingMoviesURL = 'https://api.themoviedb.org/3/movie/upcoming';
+      fetchFunction(upComingMoviesURL)
+        .then(movies => setUpComingMovies(movies))
+        .catch(error => console.log('Error fetching the movies', error))
+    }, []
+  );
+
+
   return (
     <Router>
       <Routes>
