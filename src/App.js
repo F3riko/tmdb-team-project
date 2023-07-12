@@ -10,6 +10,7 @@ import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
 import MovieGallery from './components/MovieGallery.jsx'
+import SearchPage from "./components/SearchPage";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -57,11 +58,6 @@ const UserPage = () => {
   return <h1>This page is protected by the Auth func. The user id is {id}</h1>;
 };
 
-const SearchResults = () => {
-  // useSearchParams hook goes here
-  return <h1>Search Results</h1>;
-};
-
 // End of testing section
 
 function App() {
@@ -69,6 +65,8 @@ function App() {
   const [ upComingMovies, setUpComingMovies ] = useState([]);
   /* Loading state: */
   const [ isLoading, setIsLoading ] = useState(true)
+  /* Search query state:  */
+  const [ query, setQuery] = useState('');
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(
@@ -101,7 +99,7 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchResults />} />
+          <Route path="searchResults" element={<SearchPage query={query} />} />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>
