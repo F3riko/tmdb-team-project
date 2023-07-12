@@ -8,8 +8,10 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
-import MovieGallery from './components/MovieGallery'
-import MovieCard from "./components/card"
+import MovieGallery from './components/MovieGallery.jsx'
+import PreviewCard from "./components/PreviewCard.jsx"
+import upcomingList from "./functions/upcomingList";
+
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
 // wian an actual ones
@@ -26,8 +28,13 @@ const Layout = () => {
 };
 
 const MainPage = () => {
+  const list = upcomingList();
   return (
-  <h1>Main page</h1>
+    <>
+      <h1>Main page</h1>
+      <PreviewCard
+        movie={list.results[0]}></PreviewCard>
+    </>
   )
 };
 
