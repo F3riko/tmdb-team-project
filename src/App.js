@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import "./App.css";
+import { fetchFunction } from "./functions/fetch-functions";
 import MovieGallery from './components/MovieGallery'
 import MovieCard from "./components/Card.jsx";
 
