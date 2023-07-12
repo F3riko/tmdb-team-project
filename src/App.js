@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import "./App.css";
+import { fetchFunction } from "./functions/fetch-functions";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
