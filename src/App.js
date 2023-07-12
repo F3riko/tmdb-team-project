@@ -28,13 +28,12 @@ const Layout = () => {
   );
 };
 
-const MainPage = () => {
-  const list = upcomingList();
+const MainPage = ({ moviesList} ) => {
   return (
     <>
       <h1>Main page</h1>
       <PreviewCard
-        movie={list.results[0]}></PreviewCard>
+        movie={moviesList[0]}></PreviewCard>
     </>
   )
 };
@@ -85,7 +84,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
+          <Route index element={<MainPage moviesList={upComingMovies}/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
