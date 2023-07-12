@@ -10,7 +10,6 @@ import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
 import MovieGallery from './components/MovieGallery.jsx'
-import upcomingList from "./functions/upcomingList";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -97,7 +96,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage moviesList={list}/>} />
+          <Route index element={<MainPage moviesList={upComingMovies}/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
