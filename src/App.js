@@ -10,8 +10,6 @@ import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
 import MovieGallery from './components/MovieGallery.jsx'
-import PreviewCard from "./components/PreviewCard.jsx"
-import upcomingList from "./functions/upcomingList";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -32,8 +30,9 @@ const MainPage = ({ moviesList} ) => {
   return (
     <>
       <h1>Main page</h1>
-      <PreviewCard
-        movie={moviesList[0]}></PreviewCard>
+      <MovieGallery
+        movieList={moviesList}
+        listType={"Upcoming"}></MovieGallery>
     </>
   )
 };
