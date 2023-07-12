@@ -7,6 +7,8 @@ import {
   useParams,
 } from "react-router-dom";
 import "./App.css";
+import MovieGallery from './components/MovieGallery'
+import MovieCard from "./components/Card.jsx";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -24,7 +26,9 @@ const Layout = () => {
 };
 
 const MainPage = () => {
-  return <h1>Main page</h1>;
+  return (
+  <h1>Main page</h1>
+  )
 };
 
 const MoviePage = () => {
