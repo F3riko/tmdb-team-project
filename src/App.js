@@ -9,8 +9,7 @@ import {
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import MovieGallery from './components/MovieGallery'
-import MovieCard from "./components/Card.jsx";
-
+import MovieCard from "./components/card"
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
 // wian an actual ones
