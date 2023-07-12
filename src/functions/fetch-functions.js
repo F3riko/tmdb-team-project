@@ -12,6 +12,7 @@ async function fetchFunction(url) {
     };
     const response = await fetch(url, options)
     const data = await response.json();
+    console.log(data.results)
 
     return data.results;
 };

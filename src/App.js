@@ -68,18 +68,30 @@ const SearchResults = () => {
 function App() {
   /* create a state for the upcoming movies:  */
   const [ upComingMovies, setUpComingMovies ] = useState([]);
+  /* Loading state: */
+  const [ isLoading, setIsLoading ] = useState(true)
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(
     () => {
-      let upComingMoviesURL = 'https://api.themoviedb.org/3/movie/upcoming';
+      let upComingMoviesURL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
       fetchFunction(upComingMoviesURL)
-        .then(movies => setUpComingMovies(movies))
-        .catch(error => console.log('Error fetching the movies', error))
+        .then(movies => {
+          setUpComingMovies(movies)
+          setIsLoading(false);
+        })
+        .catch(error =>  {
+          console.log('Error fetching the movies', error)
+          setIsLoading(false);
+        })
     }, []
   );
 
-  const list = upcomingList().results;
+  /* check the loadin state: */
+  if(isLoading) {
+    return <div> Please wait... </div>
+  }
+
 
   return (
     <Router>
