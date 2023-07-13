@@ -71,6 +71,10 @@ function App() {
   const [ query, setQuery] = useState('');
   /* Search results state */
   const [ searchResults, setSearchResults ] = useState([]);
+  /* Genre states */
+  const [ selectedGenre, setSelectedGenres ] = useState([]);
+  /* Language states */
+  const [ selectedLanguages, setSelectedLanguages ] = useState([]);
 
 
   /* Fetch the movie details, using the function from fetch-functions.js */
@@ -98,7 +102,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
+          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming' />} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
