@@ -7,12 +7,14 @@ import {
   Outlet,
   Navigate,
   useParams,
+  Link
 } from "react-router-dom";
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
 import MovieGallery from "./components/MovieGallery.jsx";
 import SearchPage from "./components/SearchPage";
+import NavComponent from "./components/NavBar";
 import { loadingState } from "./functions/fetch-functions";
 import { handleSearch } from "./functions/fetch-functions";
 
@@ -23,8 +25,9 @@ import { handleSearch } from "./functions/fetch-functions";
 const Layout = () => {
   return (
     <>
+      <Link to='..' className="our-logo">PAL Movie Database</Link>
       <nav>
-        <h1>Navigation component placeholder</h1>
+        <NavComponent></NavComponent>
       </nav>
       <Outlet />
     </>
@@ -98,7 +101,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
+          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming'/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
