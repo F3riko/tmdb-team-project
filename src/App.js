@@ -103,7 +103,7 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchPage searchResults={upComingMovies /* Search results should come here, upComing movies just for testing purposes */} query={query} setQuery={setQuery} />} />
+          <Route path="searchResults" element={<SearchPage searchResults={searchResults} upComingMovies={upComingMovies} query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults} />} />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>

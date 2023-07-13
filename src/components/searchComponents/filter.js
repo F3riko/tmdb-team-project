@@ -5,7 +5,7 @@ import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import SearchBar from "./searchBar";
 
 
-function FilterBar( { query, setQuery, handleSearch} ) {
+function FilterBar( { query, setQuery, handleSearch, setSearchResults} ) {
 
     /* Genre filters:  */
     const genres = [
@@ -28,7 +28,7 @@ function FilterBar( { query, setQuery, handleSearch} ) {
                     <strong>Search: </strong>
                 </p>
                 <div>
-                    <SearchBar handleSearch={handleSearch}/>
+                    <SearchBar handleSearch={handleSearch} setQuery={setQuery} query={query} setSearchResults={setSearchResults} />
                 </div>
             </Row>
             <Row>

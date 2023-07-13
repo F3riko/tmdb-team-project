@@ -5,7 +5,7 @@ import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
 
 
-function SearchPage( { searchResults } ){
+function SearchPage( { query,  setQuery, handleSearch, upComingMovies,  searchResults, setSearchResults } ){
 
     /* search filters: */
     const genres = [
@@ -24,10 +24,13 @@ function SearchPage( { searchResults } ){
         <>
          <Container className='row'>
             <Col>
-                <FilterBar/>
+                <FilterBar query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults}  />
             </Col>
             <Col>
-                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery>
+            { searchResults ?
+                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery> :
+                <MovieGallery movieList={upComingMovies} listType={"Results: "} ></MovieGallery>
+            }
             </Col>
          </Container>
         </>
