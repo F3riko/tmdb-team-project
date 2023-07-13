@@ -13,6 +13,8 @@ import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
 import MovieGallery from "./components/MovieGallery.jsx";
 import SearchPage from "./components/SearchPage";
+import { loadingState } from "./functions/fetch-functions";
+import { handleSearch } from "./functions/fetch-functions";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -61,12 +63,15 @@ const UserPage = () => {
 // End of testing section
 
 function App() {
-  /* create a state for the upcoming movies:  */
-  const [upComingMovies, setUpComingMovies] = useState([]);
+  /* Upcoming movies state :  */
+  const [ upComingMovies, setUpComingMovies ] = useState([]);
   /* Loading state: */
   const [isLoading, setIsLoading] = useState(true);
   /* Search query state:  */
-  const [query, setQuery] = useState("");
+  const [ query, setQuery] = useState('');
+  /* Search results state */
+  const [ searchResults, setSearchResults ] = useState([]);
+
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
@@ -83,10 +88,13 @@ function App() {
       });
   }, []);
 
+
+
   /* check the loadin state: */
-  if (isLoading) {
-    return <div> Please wait... </div>;
-  }
+  loadingState(isLoading);
+
+  /* handle Search: */
+  handleSearch(searchResults);
 
   return (
     <Router>
@@ -97,7 +105,7 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchPage query={query} />} />
+          <Route path="searchResults" element={<SearchPage searchResults={searchResults} />} />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>

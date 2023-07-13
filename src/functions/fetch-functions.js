@@ -17,7 +17,40 @@ async function fetchFunction(url) {
     return data.results;
 };
 
+/* Handle loading  */
+function loadingState(loadingstate){
+    if (loadingState) { /* check for a boolean value, if its true, the data is not fetched yet */
+        return <div> Please wait... </div>
+    }
+};
+
+/* Handle search: */
+ async function handleSearch(query, setSearchResults) {
+    let url = getUrl(query); /* gets the query from the state, makes the fetch url based on it */
+    const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
+    setSearchResults(searchResults); /* save it to search results state */
+ };
+
+/* Get url */
+function getUrl(query){
+    const baseUrl = `https://api.themoviedb.org/3/`;
+
+    let finalEndPoint = '';
+    let additionalParameters = ''
+
+    if (query){
+        finalEndPoint = `search/movie?query=${encodeURIComponent(query)}`;
+    };
+
+    const url = `${baseUrl}${finalEndPoint}`;
+
+    return url; 
+}
+
 /* Export functions: */
 export {
-    fetchFunction
+    fetchFunction, 
+    getUrl, 
+    loadingState, 
+    handleSearch
 };
