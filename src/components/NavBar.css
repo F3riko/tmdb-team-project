@@ -1,0 +1,7 @@
+#nav-bar{
+  background-color: darkgray;
+}
+
+#login-button, #signup-button{
+  width: 60px !important;
+}
