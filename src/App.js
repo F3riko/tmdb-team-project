@@ -91,13 +91,11 @@ function App() {
       });
   }, []);
 
-
-
   /* check the loadin state: */
   loadingState(isLoading);
 
   /* handle Search: */
-  handleSearch(searchResults);
+  handleSearch(query,setSearchResults);
 
   return (
     <Router>
@@ -108,7 +106,7 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchPage searchResults={searchResults} />} />
+          <Route path="searchResults" element={<SearchPage searchResults={searchResults} upComingMovies={upComingMovies} query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults} />} />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>

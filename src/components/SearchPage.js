@@ -1,37 +1,23 @@
 import Reacth, { useState } from 'react';
 import { Form, Container, Row } from 'react-bootstrap';
 import MovieGallery from './MovieGallery'
+import { Col } from 'react-bootstrap';
+import FilterBar from './searchComponents/filter';
 
-function SearchPage( { searchResults } ){
-
-    /* search filters: */
-    const genres = [
-        { label: "Horror", value: "27" },
-        { label: "Mistery", value: "9648" },
-        { label: "Comedy", value: "35" },
-    ];
-    const language = [
-        { label: 'Hungarian', value: 'hu' }, 
-        { label: 'English', value: 'en' },
-        { label: 'French', value: 'fr' }
-    ]
-
-    /*
-    1. filter bar
-    2. search bar component
-    3. should I refactor the fetch functions, after the search is implemented?
-
-    3. handle search in app? and in here?
-    4. query state from app.js (set by header input)
-    
-    The question: should we have one handleSearch function within the App.js, then handles all the searches, or... yes.   */
+function SearchPage( { query,  setQuery, handleSearch, upComingMovies,  searchResults, setSearchResults } ){
 
     return (
         <>
-         <Container>
-            <Row>
-                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery>
-            </Row>
+         <Container className='row'>
+            <Col className='col-md-5'>
+                <FilterBar query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults}  />
+            </Col>
+            <Col className='col-md-7'>
+            { searchResults ?
+                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery> :
+                <MovieGallery movieList={upComingMovies} listType={"Results: "} ></MovieGallery>
+            }
+            </Col>
          </Container>
         </>
     )
