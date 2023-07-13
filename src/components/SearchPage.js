@@ -1,6 +1,8 @@
 import Reacth, { useState } from 'react';
 import { Form, Container, Row } from 'react-bootstrap';
 import MovieGallery from './MovieGallery'
+import { Col } from 'react-bootstrap';
+import FilterBar from './searchComponents/filter';
 
 
 function SearchPage( { searchResults } ){
@@ -18,22 +20,15 @@ function SearchPage( { searchResults } ){
         { label: 'French', value: 'fr' }
     ]
 
-    /*
-    1. filter bar
-    2. search bar component
-    3. should I refactor the fetch functions, after the search is implemented?
-
-    3. handle search in app? and in here?
-    4. query state from app.js (set by header input)
-    
-    The question: should we have one handleSearch function within the App.js, then handles all the searches, or... yes.   */
-
     return (
         <>
-         <Container>
-            <Row>
+         <Container className='row'>
+            <Col>
+                <FilterBar/>
+            </Col>
+            <Col>
                 <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery>
-            </Row>
+            </Col>
          </Container>
         </>
     )
