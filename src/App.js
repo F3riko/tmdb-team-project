@@ -1,3 +1,5 @@
+import SignUp from "./sing-up-flow/SignUp";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -59,6 +61,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route index element={<SignUp />} /> 
+          {/* Temp */}
           <Route index element={<MainPage />} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
