@@ -9,6 +9,10 @@ import {
   useParams,
 } from "react-router-dom";
 import "./App.css";
+import { fetchFunction } from "./functions/fetch-functions";
+import { useEffect, useState } from "react";
+import MovieGallery from './components/MovieGallery.jsx'
+import SearchPage from "./components/SearchPage";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -25,8 +29,15 @@ const Layout = () => {
   );
 };
 
-const MainPage = () => {
-  return <h1>Main page</h1>;
+const MainPage = ({ moviesList} ) => {
+  return (
+    <>
+      <h1>Main page</h1>
+      <MovieGallery
+        movieList={moviesList}
+        listType={"Upcoming"}></MovieGallery>
+    </>
+  )
 };
 
 const MoviePage = () => {
@@ -49,14 +60,38 @@ const UserPage = () => {
   return <h1>This page is protected by the Auth func. The user id is {id}</h1>;
 };
 
-const SearchResults = () => {
-  // useSearchParams hook goes here
-  return <h1>Search Results</h1>;
-};
-
 // End of testing section
 
 function App() {
+  /* create a state for the upcoming movies:  */
+  const [ upComingMovies, setUpComingMovies ] = useState([]);
+  /* Loading state: */
+  const [ isLoading, setIsLoading ] = useState(true)
+  /* Search query state:  */
+  const [ query, setQuery] = useState('');
+
+  /* Fetch the movie details, using the function from fetch-functions.js */
+  useEffect(
+    () => {
+      let upComingMoviesURL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
+      fetchFunction(upComingMoviesURL)
+        .then(movies => {
+          setUpComingMovies(movies)
+          setIsLoading(false);
+        })
+        .catch(error =>  {
+          console.log('Error fetching the movies', error)
+          setIsLoading(false);
+        })
+    }, []
+  );
+
+  /* check the loadin state: */
+  if(isLoading) {
+    return <div> Please wait... </div>
+  }
+
+
   return (
     <Router>
       <Routes>
@@ -64,11 +99,12 @@ function App() {
           <Route index element={<SignUp />} /> 
           {/* Temp */}
           <Route index element={<MainPage />} />
+          <Route index element={<MainPage moviesList={upComingMovies}/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchResults />} />
+          <Route path="searchResults" element={<SearchPage query={query} />} />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>
