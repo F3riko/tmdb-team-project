@@ -1,3 +1,5 @@
+import SignUp from "./sing-up-flow/SignUp";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,7 +12,7 @@ import {
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
 import { useEffect, useState } from "react";
-import MovieGallery from './components/MovieGallery.jsx'
+import MovieGallery from "./components/MovieGallery.jsx";
 import SearchPage from "./components/SearchPage";
 import NavComponent from "./components/NavBar";
 import { loadingState } from "./functions/fetch-functions";
@@ -32,15 +34,13 @@ const Layout = () => {
   );
 };
 
-const MainPage = ({ moviesList} ) => {
+const MainPage = ({ moviesList }) => {
   return (
     <>
       <h1>Main page</h1>
-      <MovieGallery
-        movieList={moviesList}
-        listType={"Upcoming"}></MovieGallery>
+      <MovieGallery movieList={moviesList} listType={"Upcoming"}></MovieGallery>
     </>
-  )
+  );
 };
 
 const MoviePage = () => {
@@ -69,27 +69,27 @@ function App() {
   /* Upcoming movies state :  */
   const [ upComingMovies, setUpComingMovies ] = useState([]);
   /* Loading state: */
-  const [ isLoading, setIsLoading ] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   /* Search query state:  */
   const [ query, setQuery] = useState('');
   /* Search results state */
   const [ searchResults, setSearchResults ] = useState([]);
 
+
   /* Fetch the movie details, using the function from fetch-functions.js */
-  useEffect(
-    () => {
-      let upComingMoviesURL = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-      fetchFunction(upComingMoviesURL)
-        .then(movies => {
-          setUpComingMovies(movies)
-          setIsLoading(false);
-        })
-        .catch(error =>  {
-          console.log('Error fetching the movies', error)
-          setIsLoading(false);
-        })
-    }, []
-  );
+  useEffect(() => {
+    let upComingMoviesURL =
+      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+    fetchFunction(upComingMoviesURL)
+      .then((movies) => {
+        setUpComingMovies(movies);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error fetching the movies", error);
+        setIsLoading(false);
+      });
+  }, []);
 
 
 
@@ -103,7 +103,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage moviesList={upComingMovies}/>} />
+          <Route index element={<MainPage />} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
