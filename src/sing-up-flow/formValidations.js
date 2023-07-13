@@ -1,3 +1,12 @@
+import { saveTakenUsernamesInLS } from "../local-storage/fakeDB";
+
+// Await this one
+(async () => {
+  await saveTakenUsernamesInLS();
+})();
+
+const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
+
 const isAlphanumeric = (inputString) => {
   if (!/^[a-zA-Z0-9]+$/.test(inputString)) {
     return "Should contain only letters and digits";
@@ -29,6 +38,13 @@ export const arePasswordsSame = (password, repeatPassword) => {
 const isIncludedInArray = (value, array) => {
   if (!array.includes(value) && value) {
     return "You should choose from the list or leave the field empty";
+  }
+  return false;
+};
+
+const isUsernmaeTaken = (value) => {
+  if (takenUsernames.includes(value)) {
+    return "This username is already taken";
   }
   return false;
 };
@@ -81,6 +97,7 @@ export const defaultFormData = {
     validations: [
       (value) => isAlphanumeric(value),
       (value) => isLengthAppropriate(value, 3, 10),
+      (value) => isUsernmaeTaken(value),
     ],
     errors: [],
   },

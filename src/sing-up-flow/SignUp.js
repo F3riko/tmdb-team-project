@@ -14,6 +14,8 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { languages, genres } from "./formValidations";
 import { nanoid } from "nanoid";
+import { saveUserInLS, addTakenUsername } from "../local-storage/fakeDB";
+import shortHash from "short-hash";
 
 function Example() {
   // Pegination section
@@ -118,10 +120,28 @@ function Example() {
     }
   };
   const handleSubmit = () => {
-    const newUser = {};
+    // Create new user
+    const newUser = {
+      viewHistory: [],
+      id: nanoid(),
+      accessToken: nanoid(),
+    };
     Object.keys(formData).forEach((key) => {
-      newUser[key] = formData[key].value;
+      if (key !== "passwordRepeat") {
+        if (key === "password") {
+          newUser[key] = shortHash(formData[key].value);
+        } else {
+          if (key === "username") {
+            addTakenUsername(formData[key].value);
+            newUser[key] = formData[key].value;
+          } else {
+            newUser[key] = formData[key].value;
+          }
+        }
+      }
     });
+    saveUserInLS(newUser);
+    // Form to default and close
     setPaginationData((prevData) => ({
       ...prevData,
       activePage: 1,
