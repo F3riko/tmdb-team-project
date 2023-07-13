@@ -13,8 +13,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const NavComponent = ({username, onSearch, onLogin, onSignup } ) => {
   
   //These functions will handle the search, login, and signup functions when passed the correct props
-  const handleSearch = () => {
+  const handleSearch = (event) => {
     console.log('search button pushed')
+    onSearch(event.target.value)
   }
 
   const handleLogin = () => {
@@ -44,7 +45,7 @@ const NavComponent = ({username, onSearch, onLogin, onSignup } ) => {
           {/* This is the middle column, once I figure out how to stretch it */}
         </Col>
         {/* Here will be the conditional operator, which will check to see if username exists */}
-        <Col xs={7}>
+        <Col md='auto'>
         <Form controlID="login">
             <Row className="g-2 justify-content-md-right">
               <Col md='auto'>
