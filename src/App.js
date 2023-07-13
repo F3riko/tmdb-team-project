@@ -62,6 +62,12 @@ function App() {
   const [ query, setQuery] = useState('');
   /* Search results state */
   const [ searchResults, setSearchResults ] = useState([]);
+  /* Genre states */
+  const [ selectedGenre, setSelectedGenre ] = useState([]);
+  /* Language states */
+  const [ selectedLanguages, setSelectedLanguages ] = useState([]);
+
+
 
 
   /* Fetch the movie details, using the function from fetch-functions.js */
@@ -83,7 +89,7 @@ function App() {
   loadingState(isLoading);
 
   /* handle Search: */
-  handleSearch(query,setSearchResults);
+  handleSearch(query,setSearchResults, selectedGenre, selectedLanguages);
 
   return (
     <Router>
@@ -94,7 +100,19 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route path="searchResults" element={<SearchPage searchResults={searchResults} upComingMovies={upComingMovies} query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults} />} />
+          <Route path="searchResults" element={
+            <SearchPage
+              searchResults={searchResults}
+              upComingMovies={upComingMovies}
+              handleSearch={handleSearch}
+              query={query}
+              setQuery={setQuery}
+              setSearchResults={setSearchResults}
+              selectedGenre={selectedGenre}
+              setSelectedGenre={setSelectedGenre}
+              selectedLanguages={selectedLanguages}
+              setSelectedLanguages={setSelectedLanguages} />
+          } />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>
