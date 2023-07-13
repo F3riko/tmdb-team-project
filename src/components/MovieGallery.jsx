@@ -14,7 +14,7 @@ const movieGallery = ({ movieList, listType }) => {
         <h3>{listType}</h3>
         <Row>
           {movieList.slice(0,4).map(movie => 
-          <Col>
+          <Col className='preview'>
             <PreviewCard key={movie.id} movie={movie} />
           </Col>)}
         </Row>

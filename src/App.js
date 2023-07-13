@@ -1,6 +1,5 @@
 import SignUp from "./sing-up-flow/SignUp";
-import Footer from "./components/Footer";
-
+import Layout from './components/Layout'
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,19 +21,6 @@ import { handleSearch } from "./functions/fetch-functions";
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
 // wian an actual ones
-
-const Layout = () => {
-  return (
-    <>
-      <Link to='..' className="our-logo h1">PAL Movie Database</Link>
-      <nav>
-        <NavComponent></NavComponent>
-      </nav>
-      <Outlet />
-      <Footer />
-    </>
-  );
-};
 
 const MainPage = ({ moviesList }) => {
   return (
@@ -108,8 +94,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming' />} />
+        <Route path="/" element={<Layout onSearch={setQuery}/>}>
+          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming'/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />

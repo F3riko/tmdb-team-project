@@ -19,6 +19,15 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
+  const [query, setQuery] = useState('')
+
+  const HandleSearchChange = (e) =>{
+    setQuery(e.target.value)
+  }
+
+  const handleSearch = () => {
+    console.log(query);
+  }
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -54,18 +63,16 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
     }
   };
 
-  //These functions will handle the search, login, and signup functions when passed the correct props
-  const handleSearch = () => {
-    console.log("search button pushed");
-  };
-
   return (
     <Container id="nav-bar">
       <Row>
         <Col md="auto">
           <Form controlID="search">
             <Stack direction="horizontal" gap={2}>
-              <Form.Control type="search" placeholder="Search..." />
+              <Form.Control
+                placeholder="Search..."
+                name='searchQuery'
+                onChange={HandleSearchChange}/>
               <Button id="search-button" onClick={handleSearch}>
                 <FontAwesomeIcon icon={faSearch} />
               </Button>
@@ -73,11 +80,11 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
           </Form>
         </Col>
         <Col>
-          {/* This is the middle column, once I figure out how to stretch it */}
+          {/* This is the middle column, which resizes */}
         </Col>
         {/* Here will be the conditional operator, which will check to see if username exists */}
-        <Col xs={7}>
-          <Form controlID="login">
+        <Col md='auto'>
+        <Form controlID="login">
             <Row className="g-2 justify-content-md-right">
               <Col md="auto">
                 <Form.Control
