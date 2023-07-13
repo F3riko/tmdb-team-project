@@ -4,7 +4,6 @@ import MovieGallery from './MovieGallery'
 import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
 
-
 function SearchPage( { query,  setQuery, handleSearch, upComingMovies,  searchResults, setSearchResults } ){
 
     return (
