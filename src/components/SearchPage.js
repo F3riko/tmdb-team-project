@@ -2,16 +2,14 @@ import Reacth, { useState } from 'react';
 import { Form, Container, Row } from 'react-bootstrap';
 import MovieGallery from './MovieGallery'
 
-
 function SearchPage( { searchResults } ){
 
     /* search filters: */
     const genres = [
-        { label: 'Horror', value: '27' },
-        { label: 'Mistery', value: '9648'},
-        { label: 'Comedy', value: '35' },
+        { label: "Horror", value: "27" },
+        { label: "Mistery", value: "9648" },
+        { label: "Comedy", value: "35" },
     ];
-
     const language = [
         { label: 'Hungarian', value: 'hu' }, 
         { label: 'English', value: 'en' },
