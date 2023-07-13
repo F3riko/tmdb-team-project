@@ -1,4 +1,5 @@
 import SignUp from "./sing-up-flow/SignUp";
+import Footer from "./components/Footer";
 
 import {
   BrowserRouter as Router,
@@ -25,11 +26,12 @@ import { handleSearch } from "./functions/fetch-functions";
 const Layout = () => {
   return (
     <>
-      <Link to='..' className="our-logo">PAL Movie Database</Link>
+      <Link to='..' className="our-logo h1">PAL Movie Database</Link>
       <nav>
         <NavComponent></NavComponent>
       </nav>
       <Outlet />
+      <Footer />
     </>
   );
 };
