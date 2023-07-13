@@ -4,13 +4,20 @@ import MovieGallery from './MovieGallery'
 import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
 
-function SearchPage( { query,  setQuery, handleSearch, upComingMovies,  searchResults, setSearchResults } ){
+function SearchPage( { handleSearch, upComingMovies, query, setQuery, searchResults, setSearchResults, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages } ){
 
     return (
         <>
          <Container className='row'>
             <Col className='col-md-5'>
-                <FilterBar query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults}  />
+                <FilterBar handleSearch={handleSearch} 
+                query={query} 
+                setQuery={setQuery} 
+                setSearchResults={setSearchResults} 
+                selectedGenre={selectedGenre}
+                setSelectedGenre={setSelectedGenre}
+                selectedLanguages={selectedLanguages}
+                setSelectedLanguages={setSelectedLanguages} />
             </Col>
             <Col className='col-md-7'>
             { searchResults ?
