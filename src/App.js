@@ -103,7 +103,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
+          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming'/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />

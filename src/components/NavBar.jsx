@@ -8,40 +8,70 @@ import Stack from 'react-bootstrap/Stack'
 import '../bootstrap.min.css'
 import './NavBar.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const NavComponent = ({ isLoggedIn, onSearch, onLogin, onSignup } ) => {
+const NavComponent = ({username, onSearch, onLogin, onSignup } ) => {
   
-  const handleClick = () => {
+  //These functions will handle the search, login, and signup functions when passed the correct props
+  const handleSearch = () => {
     console.log('search button pushed')
+  }
+
+  const handleLogin = () => {
+    console.log('login button pushed')
+  }
+
+  const handleSignup = () => {
+    console.log('signup button pushed')
   }
 
   return(
     <Container id='nav-bar'>
       <Row>
-        <Col xs={3}>
+        <Col md='auto'>
           <Form controlID='search'>
             <Stack direction='horizontal' gap={2}>
               <Form.Control type='search' placeholder='Search...' />
               <Button 
                 id='search-button' 
-                onClick={handleClick}>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                onClick={handleSearch}>
+                  <FontAwesomeIcon icon={faSearch} />
               </Button>
             </Stack>
           </Form>
         </Col>
-        <Col>
+        <Col >
           {/* This is the middle column, once I figure out how to stretch it */}
         </Col>
+        {/* Here will be the conditional operator, which will check to see if username exists */}
         <Col xs={7}>
-          <Form controlID='login'>
-            <Stack direction='horizontal' gap={2}>
-              <Form.Control type='username' placeholder='Username' />
-              <Form.Control type='password' placeholder='Password' />
-              <Button variant='dark' id='login-button'>Log in</Button>
-              <Button variant='primary' id='signup-button'>Sign up</Button>
-            </Stack>
+        <Form controlID="login">
+            <Row className="g-2 justify-content-md-right">
+              <Col md='auto'>
+                <Form.Control type="username" placeholder="Username" />
+              </Col>
+              <Col md='auto'>
+                <Form.Control type="password" placeholder="Password" />
+              </Col>
+              <Col md='auto'>
+                <Button
+                  variant="dark"
+                  id="login-button"
+                  className="w-auto"
+                  onClick={handleLogin}>
+                    Log in
+                </Button>
+              </Col>
+              <Col md='auto'>
+                <Button 
+                  variant="primary" 
+                  id="signup-button"
+                  className="w-auto"
+                  onClick={handleSignup}>
+                    Sign up
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Col>
       </Row>
