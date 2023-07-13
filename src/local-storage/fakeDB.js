@@ -21,6 +21,15 @@ export const getUsersFromLS = () => {
 };
 
 export const saveTakenUsernamesInLS = async () => {
-  const takenUsernames = await getTakenUsernamesAPI();
-  localStorage.setItem("takenUsernames", takenUsernames);
+  let takenUsernames = localStorage.getItem("takenUsername");
+  if (!takenUsernames) {
+    takenUsernames = await getTakenUsernamesAPI();
+    localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
+  }
+};
+
+export const addTakenUsername = (username) => {
+  const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
+  takenUsernames.push(username);
+  localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
 };
