@@ -4,16 +4,21 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { validateInput, defaultFormData } from "./formValidations";
+import {
+  validateInput,
+  defaultFormData,
+  arePasswordsSame,
+} from "./formValidations";
 import Pagination from "react-bootstrap/Pagination";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { languages, genres } from "./formValidations";
+import { nanoid } from "nanoid";
 
 function Example() {
   // Pegination section
   const [paginationData, setPaginationData] = useState({
-    activePage: 3,
+    activePage: 1,
     PaginationItems: [],
   });
 
@@ -67,7 +72,6 @@ function Example() {
     const { id } = event.target;
     if (formData[id].value) {
       const errors = validateInput(id, formData);
-      console.log(id);
       if (errors) {
         setFormData((prevFormData) => {
           return {
@@ -83,7 +87,7 @@ function Example() {
     if (formData[formDataKey].errors) {
       errors = formData[formDataKey].errors.map((error) => {
         return (
-          <small>
+          <small key={nanoid()}>
             {error}
             <br />
           </small>
@@ -92,20 +96,17 @@ function Example() {
     }
     return errors;
   };
-
   const handleTypeHeadChange = (value, id) => {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [id]: { ...prevFormData[id], value: value },
+        [id]: { ...prevFormData[id], value: value[0] },
       };
     });
   };
-
   const handleTypeHeadBlur = (id) => {
     if (formData[id].value) {
       const errors = validateInput(id, formData);
-      console.log(id);
       if (errors) {
         setFormData((prevFormData) => {
           return {
@@ -121,28 +122,48 @@ function Example() {
     Object.keys(formData).forEach((key) => {
       newUser[key] = formData[key].value;
     });
-    console.log(newUser);
-    // To local storage here
+    setPaginationData((prevData) => ({
+      ...prevData,
+      activePage: 1,
+    }));
+    setFormData(defaultFormData);
     handleClose();
   };
 
   const handleNextPage = (event) => {
     event.preventDefault();
     let isError = false;
-    // Object.keys(formData).forEach((name) => {
-    //   const errors = validateInput(name, formData);
-    //   if (errors.length) {
-    //     isError = true;
-    //     setFormData((prevFormData) => {
-    //       return {
-    //         ...prevFormData,
-    //         [name]: { ...prevFormData[name], errors: errors },
-    //       };
-    //     });
-    //   }
-    // });
+    Object.keys(formData).forEach((name) => {
+      const errors = validateInput(name, formData);
+      if (errors.length) {
+        isError = true;
+        setFormData((prevFormData) => {
+          return {
+            ...prevFormData,
+            [name]: { ...prevFormData[name], errors: errors },
+          };
+        });
+      }
+    });
+    if (paginationData.activePage === 1) {
+      const error = arePasswordsSame(
+        formData.password.value,
+        formData.passwordRepeat.value
+      );
+      if (error) {
+        isError = true;
+        setFormData((prevFormData) => {
+          return {
+            ...prevFormData,
+            ["password"]: {
+              ...prevFormData["password"],
+              errors: [...prevFormData["password"].errors, error],
+            },
+          };
+        });
+      }
+    }
     if (!isError) {
-      console.log(paginationData.activePage);
       setPaginationData((prevData) => ({
         ...prevData,
         activePage: prevData.activePage + 1,
@@ -221,6 +242,9 @@ function Example() {
             <Form>
               <Form.Group className="mb-3" controlId="language">
                 <Typeahead
+                  onChange={(selected) =>
+                    handleTypeHeadChange(selected, "language")
+                  }
                   onInputChange={(selected) =>
                     handleTypeHeadChange(selected, "language")
                   }
@@ -239,6 +263,9 @@ function Example() {
                   onInputChange={(selected) =>
                     handleTypeHeadChange(selected, "genre")
                   }
+                  onChange={(selected) =>
+                    handleTypeHeadChange(selected, "genre")
+                  }
                   onBlur={() => handleTypeHeadBlur("genre")}
                   id="genre"
                   options={genres}
@@ -252,13 +279,23 @@ function Example() {
           )}
           {paginationData.activePage === 3 && (
             <Form>
-              <Form.Group className="mb-3" controlId="language">
+              <Form.Group className="mb-3" controlId="homepage">
                 <Form.Label>
                   What movies would you like to see on your homepage?
                 </Form.Label>
                 {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
                   return (
-                    <Form.Check type="radio" label={option} name={"homepage"} />
+                    <Form.Check
+                      checked={
+                        formData.homepage.value === option ? true : false
+                      }
+                      onChange={(e) => handleFieldChange(e)}
+                      value={option}
+                      key={nanoid()}
+                      type="radio"
+                      label={option}
+                      name={"homepage"}
+                    />
                   );
                 })}
               </Form.Group>
@@ -267,7 +304,11 @@ function Example() {
           {paginationData.activePage === 4 && (
             <Form>
               <Form.Group className="mb-3" controlId="voice">
-                <Form.Select aria-label="Default select example">
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={(e) => handleFieldChange(e)}
+                  name="voice"
+                >
                   <option>Preferred voice</option>
                   <option value="1">Sample 1</option>
                   <option value="2">Sample 2</option>
@@ -277,6 +318,7 @@ function Example() {
             </Form>
           )}
         </Modal.Body>
+
         <Modal.Footer className="justify-content-between">
           <Button variant="secondary" onClick={handleClose}>
             Close

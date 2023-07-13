@@ -19,7 +19,7 @@ const isAlphanumericAndAllowedChars = (inputString) => {
   return false;
 };
 
-const arePasswordsSame = (password, repeatPassword) => {
+export const arePasswordsSame = (password, repeatPassword) => {
   if (password !== repeatPassword) {
     return "Password shuld be the same!";
   }
@@ -27,8 +27,7 @@ const arePasswordsSame = (password, repeatPassword) => {
 };
 
 const isIncludedInArray = (value, array) => {
-  console.log(typeof value);
-  if (!array.includes(value)) {
+  if (!array.includes(value) && value) {
     return "You should choose from the list or leave the field empty";
   }
   return false;
@@ -91,7 +90,6 @@ export const defaultFormData = {
     validations: [
       (value) => isAlphanumericAndAllowedChars(value),
       (value) => isLengthAppropriate(value, 5, 10),
-      //   (value) => arePasswordsSame(value, defaultFormData.repeatPassword.value),
     ],
     errors: [],
   },
@@ -101,7 +99,6 @@ export const defaultFormData = {
     validations: [
       (value) => isAlphanumericAndAllowedChars(value),
       (value) => isLengthAppropriate(value, 5, 10),
-      //   (value) => arePasswordsSame(value, defaultFormData.password.value),
     ],
     errors: [],
   },
@@ -117,18 +114,31 @@ export const defaultFormData = {
     validations: [(value) => isIncludedInArray(value, genres)],
     errors: [],
   },
+  homepage: {
+    name: "homepage",
+    value: "",
+    validations: [],
+    errors: [],
+  },
+  voice: {
+    name: "homepage",
+    value: "",
+    validations: [],
+    errors: [],
+  },
 };
 
 export const validateInput = (name, formData) => {
   const value = formData[name].value;
   const errors = [];
-
-  formData[name].validations.forEach((validation) => {
-    const error = validation(value);
-    if (error) {
-      errors.push(error);
-    }
-  });
+  if (formData[name].validations) {
+    formData[name].validations.forEach((validation) => {
+      const error = validation(value);
+      if (error) {
+        errors.push(error);
+      }
+    });
+  }
 
   return errors;
 };
