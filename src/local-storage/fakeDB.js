@@ -33,3 +33,31 @@ export const addTakenUsername = (username) => {
   takenUsernames.push(username);
   localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
 };
+
+export const logInUser = (username, password) => {
+  const users = getUsersFromLS();
+  let loggedInUser = {};
+  users.forEach((user) => {
+    if (user.username === username && user.password === password) {
+      loggedInUser = user;
+      if (loggedInUser) {
+        setLoggedInUser(loggedInUser);
+        return loggedInUser.id;
+      } else {
+        return false;
+      }
+    }
+  });
+};
+
+const setLoggedInUser = (loggedInUser) => {
+  localStorage.setItem("loggedIn", JSON.stringify(loggedInUser));
+};
+
+const getLoggedInUser = () => {
+  const userLoggedIn = localStorage.getItem("loggedIn");
+  if (userLoggedIn) {
+    return JSON.parse(userLoggedIn);
+  }
+  return false;
+};
