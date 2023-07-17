@@ -12,6 +12,7 @@ function SearchPage( { handleSearch, homeList, query, setQuery, searchResults, s
             <Col className='col-md-3'>
                 <FilterBar 
                 handleSearch={handleSearch} 
+                homeList={homeList}
                 query={query} 
                 setQuery={setQuery} 
                 setSearchResults={setSearchResults} 

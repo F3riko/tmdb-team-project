@@ -29,14 +29,6 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
     return (
         <>
             <Row>
-                <p className="d-flex align-items-start m-2" >
-                    <strong>Search: </strong>
-                </p>
-                <div>
-                    <SearchBar handleSearch={handleSearch} setQuery={setQuery} query={query} setSearchResults={setSearchResults} />
-                </div>
-            </Row>
-            <Row>
                 <p className='d-flex align-items-start m-2'>
                     <strong>Filter: </strong>
                 </p>

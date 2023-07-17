@@ -16,7 +16,7 @@ function SearchBar( { query, setQuery,  handleSearch, setSearchResults } ) {
     return (
         <div>
             <Form onSubmit={handleOnSubmit}>
-                <Form.Control type="text" placeholder='Search...' className='mr-sm-2' value={query} onSubmit={handleInputChange} />
+                <Form.Control type="text" placeholder='Search...' className='mr-sm-2' onSubmit={handleInputChange} />
             </Form>
         </div>
     )
