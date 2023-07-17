@@ -28,8 +28,13 @@ export const saveTakenUsernamesInLS = async () => {
 };
 
 export const addTakenUsername = (username) => {
-  const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
-  takenUsernames.push(username);
+  let takenUsernames = localStorage.getItem("takenUsernames");
+  if (takenUsernames) {
+    takenUsernames = JSON.parse(takenUsernames);
+  } else {
+    takenUsernames = [];
+  }
+  takenUsernames.push(username.toLowerCase());
   localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
 };
 
@@ -73,4 +78,12 @@ export const updateUserInfo = (newUserInfo) => {
   const updatedUsers = { ...users, [newUserInfo.id]: newUserInfo };
   localStorage.setItem("usersStorage", JSON.stringify(updatedUsers));
   setLoggedInUser(newUserInfo);
+};
+
+export const getTakenUsernames = () => {
+  const takenUsernames = localStorage.getItem("takenUsernames");
+  if (takenUsernames) {
+    return JSON.parse(takenUsernames);
+  }
+  return false;
 };
