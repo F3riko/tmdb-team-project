@@ -13,7 +13,7 @@ import SignUp from "../sing-up-flow/SignUp";
 import shortHash from "short-hash";
 import { logInUser, getLoggedInUser } from "../local-storage/fakeDB";
 import LoginDataIncorrect from "./LoginDataIncorrect";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { handleSearch } from "../functions/fetch-functions";
 import { Link } from "react-router-dom";
 
