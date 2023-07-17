@@ -37,17 +37,14 @@ export const addTakenUsername = (username) => {
 export const logInUser = (username, password) => {
   const users = getUsersFromLS();
   let loggedInUser = {};
-  users.forEach((user) => {
+  for (const user of users) {
     if (user.username === username && user.password === password) {
       loggedInUser = user;
-      if (loggedInUser) {
-        setLoggedInUser(loggedInUser);
-        return loggedInUser.id;
-      } else {
-        return false;
-      }
+      setLoggedInUser(loggedInUser);
+      return loggedInUser.id;
     }
-  });
+  }
+  return false;
 };
 
 const setLoggedInUser = (loggedInUser) => {
