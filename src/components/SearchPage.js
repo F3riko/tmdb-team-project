@@ -1,10 +1,16 @@
-import Reacth, { useState } from 'react';
+import Reacth, { useEffect, useState } from 'react';
 import { Form, Container, Row } from 'react-bootstrap';
 import MovieGallery from './MovieGallery'
 import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
+import { useSort } from './searchComponents/search-functions';
 
 function SearchPage( { handleSearch, homeList, query, setQuery, searchResults, setSearchResults, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ){
+    /* sort state */
+    const [ sortOption, setSortOption ] = useState('');
+    const [ displayedList, setDisplayedList] = useState([]);
+
+    useSort(sortOption, homeList, searchResults, setSearchResults, displayedList, setDisplayedList);
 
     return (
         <>
@@ -21,14 +27,13 @@ function SearchPage( { handleSearch, homeList, query, setQuery, searchResults, s
                 selectedLanguages={selectedLanguages}
                 setSelectedLanguages={setSelectedLanguages}
                 selectedYear={selectedYear}
-                setSelectedYear={setSelectedYear} />
+                setSelectedYear={setSelectedYear}
+                sortOption={sortOption}
+                setSortOption={setSortOption} />
             </Col>
-            <Col className='col-md-9'>
-            { searchResults ?
-                <MovieGallery moviesList={searchResults} listType={"Results: "} ></MovieGallery> :
-                <MovieGallery moviesList={homeList} listType={"Results: "} ></MovieGallery>
-            }
-            </Col>
+                <Col className='col-md-9'>
+                    <MovieGallery moviesList={displayedList} listType={"Results: "} ></MovieGallery>
+                </Col>
          </Container>
         </>
     )
