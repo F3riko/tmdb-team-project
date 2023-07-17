@@ -35,10 +35,11 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
   };
 
   // Log in integration
-  const [loginData, setLoginData] = useState({
+  const defaultLoginData = {
     username: "",
     password: "",
-  });
+  };
+  const [loginData, setLoginData] = useState(defaultLoginData);
   const [showError, setShowError] = useState(false);
   const handleCloseError = () => setShowError(false);
   const handleShowError = () => setShowError(true);
@@ -57,6 +58,7 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
       shortHash(loginData.password)
     );
     if (loggedInId) {
+      setLoginData();
       // Navigation to the user page here
     } else {
       handleShowError();
