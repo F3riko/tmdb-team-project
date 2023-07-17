@@ -41,7 +41,6 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                             <Accordion.Body>
                                 <Form>
                                     <div key={'default'} className='mb-3'>
-
                                         {
                                             genres.map(
                                                 (genre, index) => (
