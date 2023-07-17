@@ -197,10 +197,6 @@ function SignUp({ showInitial, handleClose }) {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Sign Up
-      </Button> */}
-
       <Modal show={showInitial} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Registration</Modal.Title>

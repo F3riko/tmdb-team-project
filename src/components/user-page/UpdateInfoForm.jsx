@@ -111,7 +111,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
         if (formData[key].value && key !== "repeatPassword") {
           updatedUserData[key] =
             key === "password"
-              ? shortHash(updatedUserData[key].value)
+              ? shortHash(formData[key].value || "")
               : formData[key].value;
         }
       }
