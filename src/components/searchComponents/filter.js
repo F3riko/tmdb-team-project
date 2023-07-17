@@ -3,9 +3,10 @@ import { Accordion, Form } from "react-bootstrap";
 import Row from 'react-bootstrap/Row';
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import SearchBar from "./searchBar";
+import { useEffect } from "react";
 
 
-function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages } ) {
+function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ) {
 
     /* Genre filters:  */
     const genres = [
@@ -20,6 +21,10 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
         { label: 'English', value: 'en' },
         { label: 'French', value: 'fr'},
       ];
+
+      useEffect(() => {
+        handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear);
+    }, [query, selectedGenre, selectedLanguages, selectedYear]);
 
     return (
         <>
@@ -92,9 +97,9 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                                                         onChange={
                                                             (event) => {
                                                                 if (event.target.checked) {
-                                                                    setSelectedGenre(prevLanguages => [...prevLanguages, event.target.value]);
+                                                                    setSelectedLanguages(prevLanguages => [...prevLanguages, event.target.value]);
                                                                 } else {
-                                                                    setSelectedGenre(prevLanguages => prevLanguages.filter(language => language !== event.target.value));
+                                                                    setSelectedLanguages(prevLanguages => prevLanguages.filter(language => language !== event.target.value));
                                                                 }
                                                             }
                                                         }
@@ -107,6 +112,14 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                                 </Form>
                             </Accordion.Body>
                         </Accordion.Item>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header className="d-flex align-items-start m-2" > Relase year: </Accordion.Header>
+                        <Accordion.Body>
+                            <Form.Group>
+                                <Form.Control placeholder="Enter year..." type="text" onChange={(event) => setSelectedYear(event.target.value) } ></Form.Control>
+                            </Form.Group>
+                        </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
             </Row>

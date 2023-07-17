@@ -62,18 +62,16 @@ function App() {
   const [ query, setQuery] = useState('');
   /* Search results state */
   const [ searchResults, setSearchResults ] = useState([]);
-  /* Genre states */
+  /* Genre filter states */
   const [ selectedGenre, setSelectedGenre ] = useState([]);
-  /* Language states */
+  /* Language filter states */
   const [ selectedLanguages, setSelectedLanguages ] = useState([]);
-
-
-
+  /* Year filter states */
+  const [ selectedYear, setSelectedYear ] = useState([]);
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
-    let upComingMoviesURL =
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+    let upComingMoviesURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
     fetchFunction(upComingMoviesURL)
       .then((movies) => {
         setUpComingMovies(movies);
@@ -89,7 +87,7 @@ function App() {
   loadingState(isLoading);
 
   /* handle Search: */
-  handleSearch(query,setSearchResults, selectedGenre, selectedLanguages);
+  handleSearch(query,setSearchResults, selectedGenre, selectedLanguages, selectedYear);
 
   return (
     <Router>
@@ -111,7 +109,9 @@ function App() {
               selectedGenre={selectedGenre}
               setSelectedGenre={setSelectedGenre}
               selectedLanguages={selectedLanguages}
-              setSelectedLanguages={setSelectedLanguages} />
+              setSelectedLanguages={setSelectedLanguages}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear} />
           } />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
