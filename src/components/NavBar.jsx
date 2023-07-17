@@ -16,21 +16,11 @@ import LoginDataIncorrect from "./LoginDataIncorrect";
 import { useNavigate, Link } from "react-router-dom";
 import { handleSearch } from "../functions/fetch-functions";
 
-const NavComponent = ({
-  username,
-  onLogin,
-  onSignup,
-  setSearchResults,
-  selectedGenre,
-  selectedLanguages,
-}) => {
-  // Sign-up-flow integration
+const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages }) => {
   const [currentUser, setCurrentUser] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
-  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   const HandleSearchChange = (e) => {

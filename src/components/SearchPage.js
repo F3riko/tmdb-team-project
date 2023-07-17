@@ -4,7 +4,7 @@ import MovieGallery from './MovieGallery'
 import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
 
-function SearchPage( { handleSearch, upComingMovies, query, setQuery, searchResults, setSearchResults, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ){
+function SearchPage( { handleSearch, homeList, query, setQuery, searchResults, setSearchResults, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ){
 
     return (
         <>
@@ -24,8 +24,8 @@ function SearchPage( { handleSearch, upComingMovies, query, setQuery, searchResu
             </Col>
             <Col className='col-md-9'>
             { searchResults ?
-                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery> :
-                <MovieGallery movieList={upComingMovies} listType={"Results: "} ></MovieGallery>
+                <MovieGallery moviesList={searchResults} listType={"Results: "} ></MovieGallery> :
+                <MovieGallery moviesList={homeList} listType={"Results: "} ></MovieGallery>
             }
             </Col>
          </Container>
