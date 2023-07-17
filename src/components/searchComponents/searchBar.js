@@ -4,8 +4,9 @@ import { Form } from 'react-bootstrap';
 function SearchBar( { query, setQuery,  handleSearch, setSearchResults } ) {
 
     function handleInputChange(event) {
-        setQuery(event.target.value);
-        handleSearch(query, setSearchResults);
+        const tempQuery = event.target.value
+        setQuery(tempQuery);
+        handleSearch(tempQuery, setSearchResults);
     };
 
     function handleOnSubmit(event) {
@@ -15,7 +16,7 @@ function SearchBar( { query, setQuery,  handleSearch, setSearchResults } ) {
     return (
         <div>
             <Form onSubmit={handleOnSubmit}>
-                <Form.Control type="text" placeholder='Search...' className='mr-sm-2' value={query} onChange={handleInputChange} />
+                <Form.Control type="text" placeholder='Search...' className='mr-sm-2' value={query} onSubmit={handleInputChange} />
             </Form>
         </div>
     )
