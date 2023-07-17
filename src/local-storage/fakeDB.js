@@ -1,15 +1,24 @@
 import { getTakenUsernamesAPI } from "./jsonPlaceholderAPI";
 
 export const saveUserInLS = (userObj) => {
-  let users = localStorage.getItem("usersStorage");
+  let users = getUsersFromLS("usersStorage");
   if (users) {
-    users = JSON.parse(users);
-    users.push(userObj);
+    users = { ...users, [userObj.id]: userObj };
   } else {
-    users = [userObj];
+    users = { [userObj.id]: userObj };
   }
-  localStorage.setItem("usersStorage", JSON.stringify(users));
 };
+
+// export const saveUserInLS = (userObj) => {
+//   let users = localStorage.getItem("usersStorage");
+//   if (users) {
+//     users = JSON.parse(users);
+//     users.push(userObj);
+//   } else {
+//     users = [userObj];
+//   }
+//   localStorage.setItem("usersStorage", JSON.stringify(users));
+// };
 
 export const getUsersFromLS = () => {
   const users = localStorage.getItem("usersStorage");
@@ -37,7 +46,7 @@ export const addTakenUsername = (username) => {
 export const logInUser = (username, password) => {
   const users = getUsersFromLS();
   let loggedInUser = {};
-  for (const user of users) {
+  for (const user of Object.values(users)) {
     if (user.username === username && user.password === password) {
       loggedInUser = user;
       setLoggedInUser(loggedInUser);
@@ -50,6 +59,7 @@ export const logInUser = (username, password) => {
 const setLoggedInUser = (loggedInUser) => {
   localStorage.setItem("loggedIn", JSON.stringify(loggedInUser));
 };
+
 
 export const getLoggedInUser = () => {
   const userLoggedIn = localStorage.getItem("loggedIn");

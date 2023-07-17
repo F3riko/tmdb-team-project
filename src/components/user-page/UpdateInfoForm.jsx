@@ -29,18 +29,15 @@ const UpdateInfoForm = ({ user, setUser }) => {
       };
     });
   };
-
   const handleFieldBlur = (event) => {
     const { id } = event.target;
     if (formData[id].value) {
       const errors = validateInput(id, formData);
       if (errors) {
-        setFormData((prevFormData) => {
-          return {
-            ...prevFormData,
-            [id]: { ...prevFormData[id], errors: errors },
-          };
-        });
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [id]: { ...prevFormData[id], errors: errors },
+        }));
       }
     }
   };
@@ -81,19 +78,16 @@ const UpdateInfoForm = ({ user, setUser }) => {
   };
   const validateField = (fieldId) => {
     const errors =
-      fieldId === "repeatPassword"
-        ? [
-            ...arePasswordsSame(
-              formData[fieldId].value,
-              formData.password.value
-            ),
-          ]
+      fieldId === "passwordRepeat"
+        ? [arePasswordsSame(formData[fieldId].value, formData.password.value)]
         : validateInput(fieldId, formData);
     if (errors && errors[0]) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [fieldId]: { ...prevFormData[fieldId], errors: errors },
       }));
+      console.log(formData[fieldId].errors);
+      return true;
     }
   };
   const handleSubmit = () => {
@@ -102,7 +96,10 @@ const UpdateInfoForm = ({ user, setUser }) => {
     for (const fieldId in formData) {
       const fieldValue = formData[fieldId].value;
       if (fieldValue) {
-        validateField(fieldId);
+        if (validateField(fieldId)) {
+          hasErrors = true;
+          break;
+        }
       }
     }
 
@@ -128,6 +125,14 @@ const UpdateInfoForm = ({ user, setUser }) => {
       setUser(getLoggedInUser());
       setFormData(defaultFormData);
     }
+  };
+
+  const ButtonReset = () => {
+    return (
+      <Button variant="primary" onClick={"sa"}>
+        Reset
+      </Button>
+    );
   };
 
   return (

@@ -28,7 +28,6 @@ const isAlphanumericAndAllowedChars = (inputString) => {
 };
 
 export const arePasswordsSame = (password, repeatPassword) => {
-  console.log(password, repeatPassword);
   if (password !== repeatPassword) {
     return "Password shuld be the same!";
   }

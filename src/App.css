@@ -40,8 +40,21 @@
 .profile-placeholder-image {
   width: 200px;
   height: 200px;
+  margin-top: 75px;
+}
+
+.profile-placeholder-image-caption {
+  font-size: larger;
 }
 
 .profile-input-text {
   width: 150px;
+}
+
+.profile-from-editor {
+  margin-top: 30px;
+}
+
+.profile-from-editor > p {
+  font-size: larger;
 }
