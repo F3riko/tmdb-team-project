@@ -10,12 +10,15 @@ import {
   Link
 } from "react-router-dom";
 
-const Layout = ({onSearch}) => {
+const Layout = ({setSearchResults, selectedGenre, selectedLanguages}) => {
   return (
     <>
       <Link to='..' className="our-logo h1">PAL Movie Database</Link>
       <nav>
-        <NavComponent onSearch={onSearch}></NavComponent>
+        <NavComponent 
+        setSearchResults={setSearchResults}
+        selectedGenre={selectedGenre}
+        selectedLanguages={selectedLanguages}></NavComponent>
       </nav>
       <Outlet />
       <Footer />
