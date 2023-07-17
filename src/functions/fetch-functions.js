@@ -29,6 +29,7 @@ function loadingState(loadingstate){
     let url = getUrl(query, selectedGenre, selectedLanguages, selectedYear); /* gets the query from the state, makes the fetch url based on it */
     const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
     setSearchResults(searchResults); /* save it to search results state */
+    console.log('hello')
  };
 
 /* Get url */
