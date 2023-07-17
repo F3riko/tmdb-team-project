@@ -1,4 +1,5 @@
 import {Card, Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import './PreviewCard.css'
 
 const PreviewCard = ( { movie } ) => {
@@ -10,7 +11,7 @@ const PreviewCard = ( { movie } ) => {
         ></Card.Img>
       <Card.Body>
         <Card.Title>{movie.title}</Card.Title>
-        <Button variant='dark'>View details</Button>
+        <Button variant='dark' as={Link} to={`/movie/${movie.id}`}>View details</Button>
       </Card.Body>
     </Card>
   )
