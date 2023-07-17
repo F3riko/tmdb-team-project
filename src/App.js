@@ -72,8 +72,12 @@ function App() {
   loadingState(isLoading);
 
   /* handle Search: */
-  handleSearch(query,setSearchResults, selectedGenre, selectedLanguages, selectedYear);
+  useEffect(
+    () => {
+      handleSearch(query,setSearchResults, selectedGenre, selectedLanguages, selectedYear);
 
+    }, [query, selectedGenre, selectedLanguages, selectedYear]
+  )
   return (
     <Router>
       <Routes>
