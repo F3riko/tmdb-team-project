@@ -179,7 +179,7 @@ function SignUp({ showInitial, handleClose }) {
         setFormData((prevFormData) => {
           return {
             ...prevFormData,
-            ["password"]: {
+            password: {
               ...prevFormData["password"],
               errors: [...prevFormData["password"].errors, error],
             },

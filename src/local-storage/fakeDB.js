@@ -51,10 +51,34 @@ const setLoggedInUser = (loggedInUser) => {
   localStorage.setItem("loggedIn", JSON.stringify(loggedInUser));
 };
 
-const getLoggedInUser = () => {
+export const getLoggedInUser = () => {
   const userLoggedIn = localStorage.getItem("loggedIn");
   if (userLoggedIn) {
     return JSON.parse(userLoggedIn);
   }
   return false;
+};
+
+export const validateAccess = (accessToken) => {
+  let verified = false;
+  if (accessToken) {
+    const users = getUsersFromLS();
+    for (let i = 0; i < users.length; i++) {
+      if (accessToken === users[i].accessToken) {
+        verified = true;
+        break;
+      }
+    }
+  }
+  return verified;
+};
+
+export const updateUserInfo = (newUserInfo) => {
+  const users = getUsersFromLS();
+  const userIndex = users.indexOf(
+    users.find((user) => (user.id = newUserInfo.id))
+  );
+  users[userIndex] = newUserInfo;
+  localStorage.setItem("usersStorage", JSON.stringify(users));
+  setLoggedInUser(newUserInfo);
 };
