@@ -92,7 +92,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout onSearch={setQuery}/>}>
+        <Route path="/" element={<Layout 
+            setSearchResults={setSearchResults} 
+            selectedGenre={selectedGenre}
+            selectedLanguages={selectedLanguages} />}>
           <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming'/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
