@@ -4,18 +4,29 @@ import MovieGallery from './MovieGallery'
 import { Col } from 'react-bootstrap';
 import FilterBar from './searchComponents/filter';
 
-function SearchPage( { query,  setQuery, handleSearch, upComingMovies,  searchResults, setSearchResults } ){
+function SearchPage( { handleSearch, homeList, query, setQuery, searchResults, setSearchResults, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ){
 
     return (
         <>
          <Container className='row'>
-            <Col className='col-md-5'>
-                <FilterBar query={query} setQuery={setQuery} handleSearch={handleSearch} setSearchResults={setSearchResults}  />
+            <Col className='col-md-3'>
+                <FilterBar 
+                handleSearch={handleSearch} 
+                homeList={homeList}
+                query={query} 
+                setQuery={setQuery} 
+                setSearchResults={setSearchResults} 
+                selectedGenre={selectedGenre}
+                setSelectedGenre={setSelectedGenre}
+                selectedLanguages={selectedLanguages}
+                setSelectedLanguages={setSelectedLanguages}
+                selectedYear={selectedYear}
+                setSelectedYear={setSelectedYear} />
             </Col>
-            <Col className='col-md-7'>
+            <Col className='col-md-9'>
             { searchResults ?
-                <MovieGallery movieList={searchResults} listType={"Results: "} ></MovieGallery> :
-                <MovieGallery movieList={upComingMovies} listType={"Results: "} ></MovieGallery>
+                <MovieGallery moviesList={searchResults} listType={"Results: "} ></MovieGallery> :
+                <MovieGallery moviesList={homeList} listType={"Results: "} ></MovieGallery>
             }
             </Col>
          </Container>

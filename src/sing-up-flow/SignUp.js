@@ -17,12 +17,16 @@ import { nanoid } from "nanoid";
 import { saveUserInLS, addTakenUsername } from "../local-storage/fakeDB";
 import shortHash from "short-hash";
 
-function Example() {
+function SignUp({ showInitial, handleClose }) {
   // Pegination section
   const [paginationData, setPaginationData] = useState({
     activePage: 1,
     PaginationItems: [],
   });
+
+  useEffect(() => {
+    setFormData(defaultFormData);
+  }, [showInitial]);
 
   useEffect(() => {
     const items = [];
@@ -54,9 +58,9 @@ function Example() {
   }, [paginationData.activePage]);
 
   // Modal rendering
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   // Form data
   const [formData, setFormData] = useState(defaultFormData);
@@ -175,7 +179,7 @@ function Example() {
         setFormData((prevFormData) => {
           return {
             ...prevFormData,
-            ["password"]: {
+            password: {
               ...prevFormData["password"],
               errors: [...prevFormData["password"].errors, error],
             },
@@ -193,11 +197,7 @@ function Example() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Sign Up
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showInitial} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Registration</Modal.Title>
         </Modal.Header>
@@ -358,4 +358,4 @@ function Example() {
   );
 }
 
-export default Example;
+export default SignUp;

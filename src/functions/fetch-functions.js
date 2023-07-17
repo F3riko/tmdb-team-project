@@ -25,14 +25,15 @@ function loadingState(loadingstate){
 };
 
 /* Handle search: */
- async function handleSearch(query, setSearchResults) {
-    let url = getUrl(query); /* gets the query from the state, makes the fetch url based on it */
+ async function handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear) {
+    let url = getUrl(query, selectedGenre, selectedLanguages, selectedYear); /* gets the query from the state, makes the fetch url based on it */
     const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
     setSearchResults(searchResults); /* save it to search results state */
+    console.log('hello')
  };
 
 /* Get url */
-function getUrl(query){
+function getUrl(query, selectedGenre, selectedLanguages, selectedYear){
     const baseUrl = `https://api.themoviedb.org/3/`;
 
     let finalEndPoint = '';
@@ -40,9 +41,23 @@ function getUrl(query){
 
     if (query){
         finalEndPoint = `search/movie?query=${encodeURIComponent(query)}`;
+    } else {
+        finalEndPoint = `discover/movie?`;
     };
 
-    const url = `${baseUrl}${finalEndPoint}`;
+    if (selectedYear){
+        additionalParameters += `&primary_release_year=${selectedYear}`;
+    }
+
+    if (selectedGenre && selectedGenre.length > 0) {
+        additionalParameters += `&with_genres=${selectedGenre.join(',')}`
+    }
+
+    if (selectedLanguages) {
+        additionalParameters += `&with_original_language=${selectedLanguages}`
+    }
+
+    const url = `${baseUrl}${finalEndPoint}${additionalParameters}`;
 
     return url; 
 }
