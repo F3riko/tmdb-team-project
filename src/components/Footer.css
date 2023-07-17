@@ -1,8 +1,12 @@
 #tmdb-logo{
-  margin-left: 10px;
+  margin-left: 2ch;
   margin-right: 5px;
 }
 
 #tmdb-disclosure{
   font-size: x-small;
+}
+
+#responsive-voice-license{
+  margin-left: 2ch;
 }
