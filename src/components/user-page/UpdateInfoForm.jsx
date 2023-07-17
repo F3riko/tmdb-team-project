@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getLoggedInUser, updateUserInfo } from "../../local-storage/fakeDB";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,8 +15,24 @@ import {
 } from "../../sing-up-flow/formValidations";
 import { nanoid } from "nanoid";
 import shortHash from "short-hash";
+import { getVoices } from "../../sing-up-flow/formValidations";
 
 const UpdateInfoForm = ({ user, setUser }) => {
+  const [voices, setVoices] = useState([]);
+
+  useEffect(() => {
+    const fetchVoices = async () => {
+      try {
+        const retrievedVoices = await getVoices();
+        setVoices(retrievedVoices);
+      } catch (error) {
+        console.error("Error retrieving voices:", error);
+      }
+    };
+
+    fetchVoices();
+  }, []);
+
   const [formData, setFormData] = useState(defaultFormData);
 
   const handleFieldChange = (event) => {
@@ -29,18 +45,15 @@ const UpdateInfoForm = ({ user, setUser }) => {
       };
     });
   };
-
   const handleFieldBlur = (event) => {
     const { id } = event.target;
     if (formData[id].value) {
       const errors = validateInput(id, formData);
       if (errors) {
-        setFormData((prevFormData) => {
-          return {
-            ...prevFormData,
-            [id]: { ...prevFormData[id], errors: errors },
-          };
-        });
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [id]: { ...prevFormData[id], errors: errors },
+        }));
       }
     }
   };
@@ -81,19 +94,16 @@ const UpdateInfoForm = ({ user, setUser }) => {
   };
   const validateField = (fieldId) => {
     const errors =
-      fieldId === "repeatPassword"
-        ? [
-            ...arePasswordsSame(
-              formData[fieldId].value,
-              formData.password.value
-            ),
-          ]
+      fieldId === "passwordRepeat"
+        ? [arePasswordsSame(formData[fieldId].value, formData.password.value)]
         : validateInput(fieldId, formData);
     if (errors && errors[0]) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [fieldId]: { ...prevFormData[fieldId], errors: errors },
       }));
+      console.log(formData[fieldId].errors);
+      return true;
     }
   };
   const handleSubmit = () => {
@@ -102,7 +112,10 @@ const UpdateInfoForm = ({ user, setUser }) => {
     for (const fieldId in formData) {
       const fieldValue = formData[fieldId].value;
       if (fieldValue) {
-        validateField(fieldId);
+        if (validateField(fieldId)) {
+          hasErrors = true;
+          break;
+        }
       }
     }
 
@@ -128,6 +141,14 @@ const UpdateInfoForm = ({ user, setUser }) => {
       setUser(getLoggedInUser());
       setFormData(defaultFormData);
     }
+  };
+
+  const ButtonReset = () => {
+    return (
+      <Button variant="primary" onClick={"sa"}>
+        Reset
+      </Button>
+    );
   };
 
   return (
@@ -227,16 +248,17 @@ const UpdateInfoForm = ({ user, setUser }) => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="voice">
-        <Form.Select
-          aria-label="Default select example"
-          onChange={(e) => handleFieldChange(e)}
-          name="voice"
-        >
-          <option>Preferred voice</option>
-          <option value="1">Sample 1</option>
-          <option value="2">Sample 2</option>
-          <option value="3">Sample 3</option>
-        </Form.Select>
+        <Typeahead
+          onInputChange={(selected) => handleTypeHeadChange(selected, "voice")}
+          onChange={(selected) => handleTypeHeadChange(selected, "voice")}
+          onBlur={() => handleTypeHeadBlur("voice")}
+          id="voice"
+          options={voices}
+          placeholder="Preferable voice"
+          labelKey="name"
+          defaultInputValue={user.voice.name}
+        />
+        <Form.Text className="text-center">{renderErrors("voice")}</Form.Text>
       </Form.Group>
 
       <Button variant="primary" onClick={handleSubmit} className="w-100">

@@ -1,12 +1,11 @@
 import { getTakenUsernamesAPI } from "./jsonPlaceholderAPI";
 
 export const saveUserInLS = (userObj) => {
-  let users = localStorage.getItem("usersStorage");
+  let users = getUsersFromLS();
   if (users) {
-    users = JSON.parse(users);
-    users.push(userObj);
+    users = { ...users, [userObj.id]: userObj };
   } else {
-    users = [userObj];
+    users = { [userObj.id]: userObj };
   }
   localStorage.setItem("usersStorage", JSON.stringify(users));
 };
@@ -21,7 +20,7 @@ export const getUsersFromLS = () => {
 };
 
 export const saveTakenUsernamesInLS = async () => {
-  let takenUsernames = localStorage.getItem("takenUsername");
+  let takenUsernames = localStorage.getItem("takenUsernames");
   if (!takenUsernames) {
     takenUsernames = await getTakenUsernamesAPI();
     localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
@@ -36,8 +35,8 @@ export const addTakenUsername = (username) => {
 
 export const logInUser = (username, password) => {
   const users = getUsersFromLS();
-  let loggedInUser = {};
-  for (const user of users) {
+  let loggedInUser = null;
+  for (const user of Object.values(users)) {
     if (user.username === username && user.password === password) {
       loggedInUser = user;
       setLoggedInUser(loggedInUser);
@@ -59,26 +58,19 @@ export const getLoggedInUser = () => {
   return false;
 };
 
-export const validateAccess = (accessToken) => {
-  let verified = false;
+export const validateAccess = (accessToken, userId) => {
   if (accessToken) {
     const users = getUsersFromLS();
-    for (let i = 0; i < users.length; i++) {
-      if (accessToken === users[i].accessToken) {
-        verified = true;
-        break;
-      }
+    if (users && users[userId] && accessToken === users[userId].accessToken) {
+      return true;
     }
   }
-  return verified;
+  return false;
 };
 
 export const updateUserInfo = (newUserInfo) => {
   const users = getUsersFromLS();
-  const userIndex = users.indexOf(
-    users.find((user) => (user.id = newUserInfo.id))
-  );
-  users[userIndex] = newUserInfo;
-  localStorage.setItem("usersStorage", JSON.stringify(users));
+  const updatedUsers = { ...users, [newUserInfo.id]: newUserInfo };
+  localStorage.setItem("usersStorage", JSON.stringify(updatedUsers));
   setLoggedInUser(newUserInfo);
 };
