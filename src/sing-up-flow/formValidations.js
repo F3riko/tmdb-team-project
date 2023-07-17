@@ -28,7 +28,6 @@ const isAlphanumericAndAllowedChars = (inputString) => {
 };
 
 export const arePasswordsSame = (password, repeatPassword) => {
-  console.log(password, repeatPassword);
   if (password !== repeatPassword) {
     return "Password shuld be the same!";
   }
@@ -47,6 +46,17 @@ const isUsernameTaken = (value) => {
     return "This username is already taken";
   }
   return false;
+};
+
+export const getVoices = () => {
+  return new Promise((resolve, reject) => {
+    if (window.responsiveVoice && window.responsiveVoice.getVoices) {
+      const retrievedVoices = window.responsiveVoice.getVoices();
+      resolve(retrievedVoices);
+    } else {
+      reject(new Error("ResponsiveVoice is not available"));
+    }
+  });
 };
 
 async function getLanguageData() {

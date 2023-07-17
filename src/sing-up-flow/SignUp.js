@@ -16,6 +16,7 @@ import { languages, genres } from "./formValidations";
 import { nanoid } from "nanoid";
 import { saveUserInLS, addTakenUsername } from "../local-storage/fakeDB";
 import shortHash from "short-hash";
+import { getVoices } from "./formValidations";
 
 function SignUp({ showInitial, handleClose }) {
   // Pegination section
@@ -57,12 +58,21 @@ function SignUp({ showInitial, handleClose }) {
     }));
   }, [paginationData.activePage]);
 
-  // Modal rendering
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const [voices, setVoices] = useState([]);
 
-  // Form data
+  useEffect(() => {
+    const fetchVoices = async () => {
+      try {
+        const retrievedVoices = await getVoices();
+        setVoices(retrievedVoices);
+      } catch (error) {
+        console.error("Error retrieving voices:", error);
+      }
+    };
+
+    fetchVoices();
+  }, []);
+
   const [formData, setFormData] = useState(defaultFormData);
 
   const handleFieldChange = (event) => {
@@ -153,7 +163,6 @@ function SignUp({ showInitial, handleClose }) {
     setFormData(defaultFormData);
     handleClose();
   };
-
   const handleNextPage = (event) => {
     event.preventDefault();
     let isError = false;
@@ -324,16 +333,22 @@ function SignUp({ showInitial, handleClose }) {
           {paginationData.activePage === 4 && (
             <Form>
               <Form.Group className="mb-3" controlId="voice">
-                <Form.Select
-                  aria-label="Default select example"
-                  onChange={(e) => handleFieldChange(e)}
-                  name="voice"
-                >
-                  <option>Preferred voice</option>
-                  <option value="1">Sample 1</option>
-                  <option value="2">Sample 2</option>
-                  <option value="3">Sample 3</option>
-                </Form.Select>
+                <Typeahead
+                  onInputChange={(selected) =>
+                    handleTypeHeadChange(selected, "voice")
+                  }
+                  onChange={(selected) =>
+                    handleTypeHeadChange(selected, "voice")
+                  }
+                  onBlur={() => handleTypeHeadBlur("voice")}
+                  id="voice"
+                  options={voices}
+                  placeholder="Preferable voice"
+                  labelKey="name"
+                />
+                <Form.Text className="text-center">
+                  {renderErrors("voice")}
+                </Form.Text>
               </Form.Group>
             </Form>
           )}
