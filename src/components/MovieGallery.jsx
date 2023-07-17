@@ -4,13 +4,11 @@ import PreviewCard from "./PreviewCard";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import '../bootstrap.min.css'
-import './MovieGallery.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styles from './MovieGallery.module.css'
 
 const movieGallery = ({ moviesList, listType }) => {
   return(
-    <Container className='gallery-frame'>
+    <Container className={styles.gallery}>
       <h3>{`${listType} Movies`}</h3>
       <Row>
         {moviesList.slice(0,4).map(movie => 
