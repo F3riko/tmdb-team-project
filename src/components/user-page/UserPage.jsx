@@ -2,7 +2,6 @@ import { Container } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
-import Image from "react-bootstrap/Image";
 import { getLoggedInUser } from "../../local-storage/fakeDB";
 import UpdateInfoForm from "./UpdateInfoForm";
 import Figure from "react-bootstrap/Figure";

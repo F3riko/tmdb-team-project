@@ -6,7 +6,7 @@ const AuthRequired = () => {
   const user = getLoggedInUser();
   console.log(user);
   if (user) {
-    let isLoggedIn = validateAccess(user.accessToken);
+    let isLoggedIn = validateAccess(user.accessToken, user.id);
     console.log(isLoggedIn);
     if (!isLoggedIn) {
       return notValidated;

@@ -48,6 +48,17 @@ const isUsernameTaken = (value) => {
   return false;
 };
 
+export const getVoices = () => {
+  return new Promise((resolve, reject) => {
+    if (window.responsiveVoice && window.responsiveVoice.getVoices) {
+      const retrievedVoices = window.responsiveVoice.getVoices();
+      resolve(retrievedVoices);
+    } else {
+      reject(new Error("ResponsiveVoice is not available"));
+    }
+  });
+};
+
 async function getLanguageData() {
   const endpoint =
     "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0";
