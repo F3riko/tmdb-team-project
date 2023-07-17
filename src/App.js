@@ -46,16 +46,17 @@ function App() {
   /* Search query state:  */
   const [query, setQuery] = useState("");
   /* Search results state */
-  const [searchResults, setSearchResults] = useState([]);
-  /* Genre states */
-  const [selectedGenre, setSelectedGenre] = useState([]);
-  /* Language states */
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [ searchResults, setSearchResults ] = useState([]);
+  /* Genre filter states */
+  const [ selectedGenre, setSelectedGenre ] = useState([]);
+  /* Language filter states */
+  const [ selectedLanguages, setSelectedLanguages ] = useState([]);
+  /* Year filter states */
+  const [ selectedYear, setSelectedYear ] = useState([]);
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
-    let upComingMoviesURL =
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+    let upComingMoviesURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
     fetchFunction(upComingMoviesURL)
       .then((movies) => {
         setUpComingMovies(movies);
@@ -71,39 +72,35 @@ function App() {
   loadingState(isLoading);
 
   /* handle Search: */
-  handleSearch(query, setSearchResults, selectedGenre, selectedLanguages);
+  handleSearch(query,setSearchResults, selectedGenre, selectedLanguages, selectedYear);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout onSearch={setQuery} />}>
-          <Route
-            index
-            element={
-              <MainPage moviesList={upComingMovies} listType="Upcoming" />
-            }
-          />
+        <Route path="/" element={<Layout 
+            setSearchResults={setSearchResults} 
+            selectedGenre={selectedGenre}
+            selectedLanguages={selectedLanguages} />}>
+          <Route index element={<MainPage moviesList={upComingMovies} listType='Upcoming'/>} />
           <Route path="movie/:id" element={<MoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
-          <Route
-            path="searchResults"
-            element={
-              <SearchPage
-                searchResults={searchResults}
-                upComingMovies={upComingMovies}
-                handleSearch={handleSearch}
-                query={query}
-                setQuery={setQuery}
-                setSearchResults={setSearchResults}
-                selectedGenre={selectedGenre}
-                setSelectedGenre={setSelectedGenre}
-                selectedLanguages={selectedLanguages}
-                setSelectedLanguages={setSelectedLanguages}
-              />
-            }
-          />
+          <Route path="searchResults" element={
+            <SearchPage
+              searchResults={searchResults}
+              upComingMovies={upComingMovies}
+              handleSearch={handleSearch}
+              query={query}
+              setQuery={setQuery}
+              setSearchResults={setSearchResults}
+              selectedGenre={selectedGenre}
+              setSelectedGenre={setSelectedGenre}
+              selectedLanguages={selectedLanguages}
+              setSelectedLanguages={setSelectedLanguages}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear} />
+          } />
           <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>

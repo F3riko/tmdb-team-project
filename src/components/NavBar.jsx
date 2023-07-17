@@ -13,24 +13,28 @@ import SignUp from "../sing-up-flow/SignUp";
 import shortHash from "short-hash";
 import { logInUser, getLoggedInUser } from "../local-storage/fakeDB";
 import LoginDataIncorrect from "./LoginDataIncorrect";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { handleSearch } from "../functions/fetch-functions";
 
-const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
+const NavComponent = ({ username, onLogin, onSignup, setSearchResults, selectedGenre, selectedLanguages }) => {
   // Sign-up-flow integration
   const [currentUser, setCurrentUser] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
-  const HandleSearchChange = (e) => {
+  const HandleSearchChange = (e) =>{
     setQuery(e.target.value);
-  };
+  }
 
-  const handleSearch = () => {
-    console.log(query);
-  };
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    handleSearch(query, setSearchResults, selectedGenre, selectedLanguages);
+    navigate('/searchResults');
+  }
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -77,10 +81,10 @@ const NavComponent = ({ username, onSearch, onLogin, onSignup }) => {
             <Stack direction="horizontal" gap={2}>
               <Form.Control
                 placeholder="Search..."
-                name="searchQuery"
-                onChange={HandleSearchChange}
-              />
-              <Button id="search-button" onClick={handleSearch}>
+                name='searchQuery'
+                value={query}
+                onChange={HandleSearchChange}/>
+              <Button id="search-button" onClick={handleSearchClick}>
                 <FontAwesomeIcon icon={faSearch} />
               </Button>
             </Stack>
