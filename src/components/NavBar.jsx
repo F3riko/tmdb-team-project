@@ -11,13 +11,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "../sing-up-flow/SignUp";
 import shortHash from "short-hash";
-import { logInUser } from "../local-storage/fakeDB";
+import { logInUser, getLoggedInUser } from "../local-storage/fakeDB";
 import LoginDataIncorrect from "./LoginDataIncorrect";
 import { useNavigate } from "react-router-dom";
 import { handleSearch } from "../functions/fetch-functions";
 
 const NavComponent = ({ username, onLogin, onSignup, setSearchResults, selectedGenre, selectedLanguages }) => {
   // Sign-up-flow integration
+  const [currentUser, setCurrentUser] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
@@ -40,10 +42,11 @@ const NavComponent = ({ username, onLogin, onSignup, setSearchResults, selectedG
   };
 
   // Log in integration
-  const [loginData, setLoginData] = useState({
+  const defaultLoginData = {
     username: "",
     password: "",
-  });
+  };
+  const [loginData, setLoginData] = useState(defaultLoginData);
   const [showError, setShowError] = useState(false);
   const handleCloseError = () => setShowError(false);
   const handleShowError = () => setShowError(true);
@@ -62,6 +65,8 @@ const NavComponent = ({ username, onLogin, onSignup, setSearchResults, selectedG
       shortHash(loginData.password)
     );
     if (loggedInId) {
+      setLoginData(defaultLoginData);
+      setCurrentUser(getLoggedInUser());
       // Navigation to the user page here
     } else {
       handleShowError();
@@ -85,54 +90,61 @@ const NavComponent = ({ username, onLogin, onSignup, setSearchResults, selectedG
             </Stack>
           </Form>
         </Col>
-        <Col>
-          {/* This is the middle column, which resizes */}
-        </Col>
-        {/* Here will be the conditional operator, which will check to see if username exists */}
-        <Col md='auto'>
-        <Form controlID="login">
-            <Row className="g-2 justify-content-md-right">
-              <Col md="auto">
-                <Form.Control
-                  type="username"
-                  placeholder="Username"
-                  name="username"
-                  onChange={handleFieldChange}
-                />
-              </Col>
-              <Col md="auto">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  onChange={handleFieldChange}
-                />
-              </Col>
-              <Col md="auto">
-                <Button
-                  variant="dark"
-                  id="login-button"
-                  className="w-auto"
-                  onClick={handleLogin}
-                >
-                  Log in
-                </Button>
-              </Col>
-              <Col md="auto">
-                <Button
-                  variant="primary"
-                  id="signup-button"
-                  className="w-auto"
-                  onClick={handleSignup}
-                  type="submit"
-                >
-                  Sign up
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+        <Col>{/* This is the middle column, which resizes */}</Col>
+        {/* Here will be the conditional operator, which will check to see if username exists\ */}
+        <Col md="auto">
+          {currentUser ? (
+            <>
+              <span>Hello, {currentUser.username}!</span>
+              <Link to={`user/${currentUser.id}`}>Profile</Link>
+            </>
+          ) : (
+            <Form controlID="login">
+              <Row className="g-2 justify-content-md-right">
+                <Col md="auto">
+                  <Form.Control
+                    type="username"
+                    placeholder="Username"
+                    name="username"
+                    onChange={handleFieldChange}
+                  />
+                </Col>
+                <Col md="auto">
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={handleFieldChange}
+                  />
+                </Col>
+                <Col md="auto">
+                  <Button
+                    variant="dark"
+                    id="login-button"
+                    className="w-auto"
+                    onClick={handleLogin}
+                  >
+                    Log in
+                  </Button>
+                </Col>
+                <Col md="auto">
+                  <Button
+                    variant="primary"
+                    id="signup-button"
+                    className="w-auto"
+                    onClick={handleSignup}
+                    type="submit"
+                  >
+                    Sign up
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          )}
         </Col>
       </Row>
+
+      {/* Modals of sign-up-login flow */}
       <LoginDataIncorrect
         showInitial={showError}
         handleClose={handleCloseError}

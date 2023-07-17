@@ -1,5 +1,5 @@
 import SignUp from "./sing-up-flow/SignUp";
-import Layout from './components/Layout'
+import Layout from "./components/Layout";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,7 +7,7 @@ import {
   Outlet,
   Navigate,
   useParams,
-  Link
+  Link,
 } from "react-router-dom";
 import "./App.css";
 import { fetchFunction } from "./functions/fetch-functions";
@@ -17,6 +17,8 @@ import SearchPage from "./components/SearchPage";
 import NavComponent from "./components/NavBar";
 import { loadingState } from "./functions/fetch-functions";
 import { handleSearch } from "./functions/fetch-functions";
+import UserPage from "./components/user-page/UserPage";
+import AuthRequired from "./components/user-page/AuthRequired";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -36,30 +38,13 @@ const MoviePage = () => {
   return <h1>Movie with id {id}</h1>;
 };
 
-const AuthRequired = () => {
-  // AuthFunc(id) goes in this layout component
-  const isLoggedIn = true;
-  if (!isLoggedIn) {
-    return <Navigate to="/" />;
-  }
-  return <Outlet />;
-};
-
-const UserPage = () => {
-  const { id } = useParams();
-
-  return <h1>This page is protected by the Auth func. The user id is {id}</h1>;
-};
-
-// End of testing section
-
 function App() {
   /* Upcoming movies state :  */
-  const [ upComingMovies, setUpComingMovies ] = useState([]);
+  const [upComingMovies, setUpComingMovies] = useState([]);
   /* Loading state: */
   const [isLoading, setIsLoading] = useState(true);
   /* Search query state:  */
-  const [ query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   /* Search results state */
   const [ searchResults, setSearchResults ] = useState([]);
   /* Genre filter states */
