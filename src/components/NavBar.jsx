@@ -13,13 +13,11 @@ import SignUp from "../sing-up-flow/SignUp";
 import shortHash from "short-hash";
 import { logInUser, getLoggedInUser } from "../local-storage/fakeDB";
 import LoginDataIncorrect from "./LoginDataIncorrect";
-import { useNavigate } from "react-router-dom";
-import { handleSearch } from "../functions/fetch-functions";
+import { useNavigate, Link } from "react-router-dom";
+import { handleSearch } from "../functions/fetch-functions"
 
-const NavComponent = ({ username, onLogin, onSignup, query, setQuery, setSearchResults, selectedGenre, selectedLanguages }) => {
-  // Sign-up-flow integration
+const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages }) => {
   const [currentUser, setCurrentUser] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);

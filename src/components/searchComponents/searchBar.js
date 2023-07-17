@@ -4,13 +4,13 @@ import { Form } from 'react-bootstrap';
 function SearchBar( { query, setQuery,  handleSearch, setSearchResults } ) {
 
     function handleInputChange(event) {
-        const tempQuery = event.target.value
-        setQuery(tempQuery);
-        handleSearch(tempQuery, setSearchResults);
+        setQuery(event.target.value);
+        console.log(query);
     };
 
     function handleOnSubmit(event) {
         event.preventDefault();
+        handleSearch(event.target.value, setSearchResults)
     }
 
     return (

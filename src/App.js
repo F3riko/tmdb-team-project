@@ -24,11 +24,17 @@ import AuthRequired from "./components/user-page/AuthRequired";
 // when the specified components are ready the placeholder should have been replaced
 // wian an actual ones
 
-const MainPage = ({ moviesList }) => {
+const MainPage = ({ homeList, genreList }) => {
   return (
     <>
       <h1>Main page</h1>
-      <MovieGallery movieList={moviesList} listType={"Upcoming"}></MovieGallery>
+      <MovieGallery movieList={homeList} listType={"Upcoming"}></MovieGallery>
+      {selectedGenre ? 
+        <MovieGallery
+          movieList={genreList}
+          listType={``}> </MovieGallery>:
+        <></>
+      }
     </>
   );
 };
@@ -40,7 +46,7 @@ const MoviePage = () => {
 
 function App() {
   /* Upcoming movies state :  */
-  const [upComingMovies, setUpComingMovies] = useState([]);
+  const [homeList, setHomeList] = useState([]);
   /* Loading state: */
   const [isLoading, setIsLoading] = useState(true);
   /* Search query state:  */
@@ -56,10 +62,14 @@ function App() {
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
-    let upComingMoviesURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
-    fetchFunction(upComingMoviesURL)
+    if (homeList){
+
+    } else {
+      let homeListURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+    }
+    fetchFunction(homeListURL)
       .then((movies) => {
-        setUpComingMovies(movies);
+        setHomeList(movies);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -78,6 +88,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout 
+            query={query}
+            setQuery={setQuery}
             setSearchResults={setSearchResults} 
             selectedGenre={selectedGenre}
             selectedLanguages={selectedLanguages} />}>
