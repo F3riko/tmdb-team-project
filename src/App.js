@@ -20,17 +20,11 @@ import { handleSearch } from "./functions/fetch-functions";
 import UserPage from "./components/user-page/UserPage";
 import AuthRequired from "./components/user-page/AuthRequired";
 import MainPage from "./components/MainPage";
+import SingleMoviePage from "./components/DedicatedMoviePage";
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
 // wian an actual ones
-
-
-
-const MoviePage = () => {
-  const { id } = useParams();
-  return <h1>Movie with id {id}</h1>;
-};
 
 function App() {
   /* Home gallery type state :  */
@@ -95,7 +89,7 @@ function App() {
             selectedGenre={selectedGenre}
             selectedLanguages={selectedLanguages} />}>
           <Route index element={<MainPage homeList={homeList} homeType='Upcoming'/>} />
-          <Route path="movie/:id" element={<MoviePage />} />
+          <Route path="/movie/:id" element={<SingleMoviePage />} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage />} />
           </Route>
@@ -114,7 +108,6 @@ function App() {
               selectedYear={selectedYear}
               setSelectedYear={setSelectedYear} />
           } />
-          <Route path="*" element={<h1>404 - Page not found goes here</h1>} />
         </Route>
       </Routes>
     </Router>
