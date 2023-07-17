@@ -20,15 +20,16 @@ const UpdateInfoForm = ({ user, setUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
 
   const handleFieldChange = (event) => {
-    console.log(formData);
-    const { id, value } = event.target;
+    let { id, value } = event.target;
+    const updatedId = id.includes("homepage") ? "homepage" : id;
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [id]: { ...prevFormData[id], value: value, errors: [] },
+        [updatedId]: { ...prevFormData[updatedId], value: value, errors: [] },
       };
     });
   };
+
   const handleFieldBlur = (event) => {
     const { id } = event.target;
     if (formData[id].value) {
@@ -81,7 +82,12 @@ const UpdateInfoForm = ({ user, setUser }) => {
   const validateField = (fieldId) => {
     const errors =
       fieldId === "repeatPassword"
-        ? [arePasswordsSame(formData[fieldId].value, formData.password.value)]
+        ? [
+            ...arePasswordsSame(
+              formData[fieldId].value,
+              formData.password.value
+            ),
+          ]
         : validateInput(fieldId, formData);
     if (errors && errors[0]) {
       setFormData((prevFormData) => ({
@@ -133,7 +139,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
             onBlur={handleFieldBlur}
             type="text"
             placeholder="Username"
-            defaultValue={formData.username.value}
+            value={formData.username.value}
           />
           <Form.Text className="text-center">
             {renderErrors("username")}
@@ -148,7 +154,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
             onBlur={handleFieldBlur}
             type="password"
             placeholder="Password"
-            defaultValue={formData.password.value}
+            value={formData.password.value}
           />
           <Form.Text className="text-center">
             {renderErrors("password")}
@@ -163,7 +169,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
             onBlur={handleFieldBlur}
             type="password"
             placeholder="Repeat password"
-            defaultValue={formData.passwordRepeat.value}
+            value={formData.passwordRepeat.value}
           />
           <Form.Text className="text-center">
             {renderErrors("passwordRepeat")}
@@ -208,7 +214,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
         {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
           return (
             <Form.Check
-              checked={user.homepage === option ? true : false}
+              checked={formData.homepage.value === option ? true : false}
               onChange={(e) => handleFieldChange(e)}
               value={option}
               key={nanoid()}
@@ -233,7 +239,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
         </Form.Select>
       </Form.Group>
 
-      <Button variant="primary" onClick={handleSubmit}>
+      <Button variant="primary" onClick={handleSubmit} className="w-100">
         Submit
       </Button>
     </Form>

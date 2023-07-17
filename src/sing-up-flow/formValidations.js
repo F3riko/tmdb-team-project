@@ -1,11 +1,10 @@
 import { saveTakenUsernamesInLS } from "../local-storage/fakeDB";
 
+const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
 // Await this one
 (async () => {
   await saveTakenUsernamesInLS();
 })();
-
-const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
 
 const isAlphanumeric = (inputString) => {
   if (!/^[a-zA-Z0-9]+$/.test(inputString)) {
@@ -29,6 +28,7 @@ const isAlphanumericAndAllowedChars = (inputString) => {
 };
 
 export const arePasswordsSame = (password, repeatPassword) => {
+  console.log(password, repeatPassword);
   if (password !== repeatPassword) {
     return "Password shuld be the same!";
   }
@@ -42,7 +42,7 @@ const isIncludedInArray = (value, array) => {
   return false;
 };
 
-const isUsernmaeTaken = (value) => {
+const isUsernameTaken = (value) => {
   if (takenUsernames.includes(value)) {
     return "This username is already taken";
   }
@@ -97,7 +97,7 @@ export const defaultFormData = {
     validations: [
       (value) => isAlphanumeric(value),
       (value) => isLengthAppropriate(value, 3, 10),
-      (value) => isUsernmaeTaken(value),
+      (value) => isUsernameTaken(value),
     ],
     errors: [],
   },

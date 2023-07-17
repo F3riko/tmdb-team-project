@@ -23,15 +23,15 @@ const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selecte
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
-  const HandleSearchChange = (e) =>{
+  const HandleSearchChange = (e) => {
     setQuery(e.target.value);
-  }
+  };
 
   const handleSearchClick = (e) => {
     e.preventDefault();
     handleSearch(query, setSearchResults, selectedGenre, selectedLanguages);
-    navigate('/searchResults');
-  }
+    navigate("/searchResults");
+  };
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -78,9 +78,10 @@ const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selecte
             <Stack direction="horizontal" gap={2}>
               <Form.Control
                 placeholder="Search..."
-                name='searchQuery'
+                name="searchQuery"
                 value={query}
-                onChange={HandleSearchChange}/>
+                onChange={HandleSearchChange}
+              />
               <Button id="search-button" onClick={handleSearchClick}>
                 <FontAwesomeIcon icon={faSearch} />
               </Button>
