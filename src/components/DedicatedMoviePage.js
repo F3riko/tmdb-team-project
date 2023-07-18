@@ -59,19 +59,17 @@ function SingleMoviePage( {user}) {
                             </div>
                             <div>
                                 <p><strong>Score:</strong> {movieData.vote_average} </p>
-                                <p><strong>Relase date:</strong> {movieData.release_date} </p>
-                                <p><strong>Watched: </strong> </p>
-                                <p>{movieData.overview}</p>
+                                <p><strong>Release date:</strong> {movieData.release_date} </p>
                                 <ButtonGroup className=''>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.release_date, selectedVoice)} >Speak</Button>
                                     <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
                                 </ButtonGroup>
-                                <p><strong>Watched: </strong> </p>
+                                <p>{movieData.overview}</p>
                                 <p>{movieData.overview}</p>
                                 <ButtonGroup className=''>
-                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.overview, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.overview, selectedVoice)} >Speak</Button>
                                     <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
