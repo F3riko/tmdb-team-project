@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
+import { deleteViewHistory } from "../../local-storage/fakeDB";
 
 const FilterViewHistoryBar = ({
   moviesToFilter,
@@ -32,6 +33,10 @@ const FilterViewHistoryBar = ({
   const [rating, setRating] = useState(0);
   const [year, setYear] = useState("");
 
+  useEffect(() => {
+    handleReset();
+  }, []);
+
   const handleReset = () => {
     setSelectedGenre("");
     setRating(0);
@@ -51,9 +56,13 @@ const FilterViewHistoryBar = ({
     setYear(e.target.value);
   };
 
+  const deleteAllHistory = () => {
+    deleteViewHistory();
+  };
+
   const filterMovies = () => {
     setMoviesAfterFilter([false]);
-    const filteredMovies = moviesToFilter.filter((movie) => {
+    const filteredMovies = unsortedMovies.filter((movie) => {
       let matchGenre = true;
       let matchRating = true;
       let matchYear = true;
@@ -135,14 +144,17 @@ const FilterViewHistoryBar = ({
             />
           </div>
         </div>
-        <div className="col">
-          <div className="form-group text-center">
+        <div className="col mt-4">
+          <div className="form-group text-center d-flex justify-content-around align-items-end">
             <button className="btn btn-primary" onClick={filterMovies}>
               Apply
             </button>
             <button className="btn btn-primary" onClick={handleReset}>
               Reset
             </button>
+            {/* <button className="btn btn-danger" onClick={deleteAllHistory}>
+              Delete all history
+            </button> */}
           </div>
         </div>
       </div>
