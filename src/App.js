@@ -47,7 +47,7 @@ function App() {
   // Logged-in user state:
   const [user, setUser] = useState(getLoggedInUser())
 
-  /* Fetch the movie details, using the function from fetch-functions.js */
+  /* Fetch the upper movie list, using the function from fetch-functions.js */
   useEffect(() => {
     let homeListURL;
     if (user){
@@ -93,8 +93,8 @@ function App() {
             selectedLanguages={selectedLanguages} />}>
           <Route index element={<MainPage
                                   homeList={homeList}
-                                  homeType={user ? user.homepage : "Upcoming"}/>} />
-
+                                  homeType={user ? user.homepage : "Upcoming"}
+                                  user={user} />}/>
           <Route path="/movie/:id" element={<SingleMoviePage user={user}/>} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage
