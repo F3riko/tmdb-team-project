@@ -11,7 +11,7 @@ function SingleMoviePage( {user}) {
     const [ movieData, setMovieData ] = useState([]);
     saveMovieInHistory(id)
     const [ reviews, setReviews ] = useState([]);
-    const selectedVoice = user.voice.name;
+    const selectedVoice = user.voice.name ? user.voice.name : "UK English Female";
 
 
     useEffect(
