@@ -94,6 +94,7 @@ function App() {
           <Route index element={<MainPage
                                   homeList={homeList}
                                   homeType={user ? user.homepage : "Upcoming"}/>} />
+
           <Route path="/movie/:id" element={<SingleMoviePage user={user}/>} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage
