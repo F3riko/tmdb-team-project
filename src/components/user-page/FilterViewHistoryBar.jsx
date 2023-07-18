@@ -152,9 +152,9 @@ const FilterViewHistoryBar = ({
             <button className="btn btn-primary" onClick={handleReset}>
               Reset
             </button>
-            {/* <button className="btn btn-danger" onClick={deleteAllHistory}>
+            <button className="btn btn-danger" onClick={deleteAllHistory}>
               Delete all history
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

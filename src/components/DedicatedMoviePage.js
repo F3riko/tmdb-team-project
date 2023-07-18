@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
 import { fetchFunction, getUrl } from "../functions/fetch-functions";
-import { saveMovieInHistory } from "../local-storage/fakeDB";
+import { getLoggedInUser, saveMovieInHistory } from "../local-storage/fakeDB";
 import { Row, Col, Container, Button, ButtonGroup } from "react-bootstrap";
 import ViewHistoryGallery from "../components/user-page/ViewHistoryGallery";
-// import {
-//   getViewMoviesData,
-//   setViewMoviesData,
-// } from "../../local-storage/fakeDB";
+import { getViewMoviesData, setViewMoviesData } from "../local-storage/fakeDB";
 
 function SingleMoviePage({ user }) {
   const { id } = useParams();
@@ -43,34 +40,36 @@ function SingleMoviePage({ user }) {
     console.log(reviews);
   }, [id]);
 
-  //   const [moviesFromHistory, setMoviesFromHistory] = useState([]);
-  //   const [loading, setLoading] = useState(true);
+  const [moviesFromHistory, setMoviesFromHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchMoviesFromHistory = async (user) => {
+      try {
+        if (user.viewHistory && !getViewMoviesData()) {
+          const moviePromises = user.viewHistory.map((movieId) => {
+            const movieDataUrl = getUrl(null, null, null, null, movieId);
+            return fetchFunction(movieDataUrl, true);
+          });
 
-  //   useEffect(() => {
-  //     const fetchMoviesFromHistory = async () => {
-  //       try {
-  //         if (user.viewHistory && !getViewMoviesData()) {
-  //           const moviePromises = user.viewHistory.map((movieId) => {
-  //             const movieDataUrl = getUrl(null, null, null, null, movieId);
-  //             return fetchFunction(movieDataUrl, true);
-  //           });
+          const moviesFromHistoryData = await Promise.all(moviePromises);
+          setMoviesFromHistory(moviesFromHistoryData);
+          setViewMoviesData(moviesFromHistoryData);
+        } else {
+          setMoviesFromHistory(getViewMoviesData());
+        }
+      } catch (error) {
+        console.log("Error during fetching movies from history: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-
-  //           const moviesFromHistoryData = await Promise.all(moviePromises);
-  //           setMoviesFromHistory(moviesFromHistoryData);
-  //           setViewMoviesData(moviesFromHistoryData);
-  //         } else {
-  //           setMoviesFromHistory(getViewMoviesData());
-  //         }
-  //       } catch (error) {
-  //         console.log("Error during fetching movies from history: ", error);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-  //     fetchMoviesFromHistory();
-  //   }, [user.viewHistory]);
+    const currentUser = getLoggedInUser();
+    if (currentUser) {
+      fetchMoviesFromHistory(currentUser);
+    }
+  }, [user.viewHistory]);
 
   return (
     <>
@@ -196,7 +195,9 @@ function SingleMoviePage({ user }) {
             </div>
           </Container>
         </Row>
-        {/* {<ViewHistoryGallery movies={}/>} */}
+        {moviesFromHistory[0] && (
+          <ViewHistoryGallery movies={moviesFromHistory} />
+        )}
         <Row>
           <Container className="galery-container">
             <div className="col gallery-container">

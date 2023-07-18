@@ -179,6 +179,10 @@ function SignUp({ showInitial, handleClose }) {
           if (key === "username") {
             addTakenUsername(formData[key].value);
             newUser[key] = formData[key].value;
+          } else if (key === "voice") {
+            newUser[key] = formData[key]
+              ? formData[key]
+              : { name: "French Female" };
           } else {
             newUser[key] = formData[key].value;
           }
