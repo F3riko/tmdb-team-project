@@ -74,3 +74,8 @@ export const updateUserInfo = (newUserInfo) => {
   localStorage.setItem("usersStorage", JSON.stringify(updatedUsers));
   setLoggedInUser(newUserInfo);
 };
+
+export const saveMovieInUserHistory = (movieId) => {
+  
+  if (movieId && )
+}
