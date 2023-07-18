@@ -11,13 +11,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "../sing-up-flow/SignUp";
 import shortHash from "short-hash";
-import { logInUser, getLoggedInUser } from "../local-storage/fakeDB";
+import {
+  logInUser,
+  getLoggedInUser,
+  logOutUser,
+} from "../local-storage/fakeDB";
 import LoginDataIncorrect from "./LoginDataIncorrect";
 import { useNavigate, Link } from "react-router-dom";
 import { handleSearch } from "../functions/fetch-functions";
+import Image from "react-bootstrap/Image";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
-const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages }) => {
-  const [currentUser, setCurrentUser] = useState(false);
+const NavComponent = ({
+  query,
+  setQuery,
+  setSearchResults,
+  selectedGenre,
+  selectedLanguages,
+}) => {
+  // Sign-up-login-flow: sign up flow
+  const [currentUser, setCurrentUser] = useState(getLoggedInUser());
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
@@ -56,18 +69,40 @@ const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selecte
     }));
   };
 
-  const handleLogin = (e) => {
-    const loggedInId = logInUser(
-      loginData.username,
-      shortHash(loginData.password)
-    );
-    if (loggedInId) {
-      setLoginData(defaultLoginData);
-      setCurrentUser(getLoggedInUser());
-      // Navigation to the user page here
-    } else {
-      handleShowError();
+  const handleLogin = () => {
+    if (loginData.username && loginData.password) {
+      const loggedInId = logInUser(
+        loginData.username,
+        shortHash(loginData.password)
+      );
+      if (loggedInId) {
+        setLoginData(defaultLoginData);
+        setCurrentUser(getLoggedInUser());
+      } else {
+        handleShowError();
+      }
     }
+  };
+
+  const UserLoggedInProfile = ({ currentUser }) => {
+    return (
+      <div className="d-flex justify-content-center align-items-center mt-1">
+        <span className="nav-profile-text">Hello, {currentUser.username}!</span>
+        <Link to={`user/${currentUser.id}`}>
+          <Image className="nav-image-thumbnail" src="/user.png" />
+        </Link>
+        <FontAwesomeIcon
+          icon={faRightFromBracket}
+          size="xl"
+          style={{ color: "#556080" }}
+          className="nav-exit-icon"
+          onClick={() => {
+            logOutUser();
+            setCurrentUser(getLoggedInUser());
+          }}
+        />
+      </div>
+    );
   };
 
   return (
@@ -89,13 +124,9 @@ const NavComponent = ({query, setQuery, setSearchResults, selectedGenre, selecte
           </Form>
         </Col>
         <Col>{/* This is the middle column, which resizes */}</Col>
-        {/* Here will be the conditional operator, which will check to see if username exists\ */}
         <Col md="auto">
-          {currentUser ? (
-            <>
-              <span>Hello, {currentUser.username}!</span>
-              <Link to={`user/${currentUser.id}`}>Profile</Link>
-            </>
+          {currentUser && currentUser.username ? (
+            <UserLoggedInProfile currentUser={currentUser} />
           ) : (
             <Form controlID="login">
               <Row className="g-2 justify-content-md-right">

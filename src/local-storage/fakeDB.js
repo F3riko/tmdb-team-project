@@ -51,6 +51,13 @@ export const logInUser = (username, password) => {
   return false;
 };
 
+export const logOutUser = () => {
+  const currentUser = getLoggedInUser();
+  if (currentUser) {
+    localStorage.removeItem("loggedIn");
+  }
+};
+
 const setLoggedInUser = (loggedInUser) => {
   localStorage.setItem("loggedIn", JSON.stringify(loggedInUser));
 };
@@ -58,7 +65,8 @@ const setLoggedInUser = (loggedInUser) => {
 export const getLoggedInUser = () => {
   const userLoggedIn = localStorage.getItem("loggedIn");
   if (userLoggedIn) {
-    return JSON.parse(userLoggedIn);
+    const parsedUser = JSON.parse(userLoggedIn);
+    return parsedUser;
   }
   return false;
 };
