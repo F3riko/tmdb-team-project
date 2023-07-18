@@ -44,8 +44,6 @@ function App() {
   const [ selectedLanguages, setSelectedLanguages ] = useState([]);
   /* Year filter states */
   const [ selectedYear, setSelectedYear ] = useState([]);
-  // Selected voice state:
-  const [selectedVoice, setSelectedVoice] = useState('UK English Female')
   // Logged-in user state:
   const [user, setUser] = useState(getLoggedInUser())
 
@@ -93,8 +91,11 @@ function App() {
             setSearchResults={setSearchResults} 
             selectedGenre={selectedGenre}
             selectedLanguages={selectedLanguages} />}>
-          <Route index element={<MainPage homeList={homeList} homeType={user.homepage}/>} />
-          <Route path="/movie/:id" element={<SingleMoviePage />} />
+          <Route index element={<MainPage
+                                  homeList={homeList}
+                                  homeType={user.homepage}
+                                  selectedVoice={user.voice.name}/>} />
+          <Route path="/movie/:id" element={<SingleMoviePage user={user}/>} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage
                                               homeListType={homeListType}
