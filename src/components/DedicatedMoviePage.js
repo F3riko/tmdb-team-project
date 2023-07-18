@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom';
 import { fetchFunction, getUrl } from '../functions/fetch-functions';
 import { saveMovieInHistory } from '../local-storage/fakeDB';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button, ButtonGroup } from 'react-bootstrap';
 
 function SingleMoviePage( {user}) {
     const { id } = useParams();
@@ -50,15 +50,41 @@ function SingleMoviePage( {user}) {
                         <div className='col overview-container'>
                             <div className='movie-title'>
                                 <strong>{movieData.original_title}</strong>
+<<<<<<< Updated upstream
                                 <button onClick={() => window.responsiveVoice.speak(movieData.original_title, selectedVoice)} ></button>
+=======
+                                <ButtonGroup className=''>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.original_title, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
+                                </ButtonGroup>
+>>>>>>> Stashed changes
                             </div>
                             <div>
                                 <p><strong>Score:</strong> {movieData.vote_average} </p>
                                 <p><strong>Relase date:</strong> {movieData.release_date} </p>
+<<<<<<< Updated upstream
                                 <button onClick={() => {console.log(selectedVoice); window.responsiveVoice.speak(movieData.release_date, selectedVoice)} }></button>
                                 <p><strong>Watched: </strong> </p>
                                 <p>{movieData.overview}</p>
                                 <button onClick={() => window.responsiveVoice.speak(movieData.overview, selectedVoice)} ></button>
+=======
+                                <ButtonGroup className=''>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.release_date, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
+                                </ButtonGroup>
+                                <p><strong>Watched: </strong> </p>
+                                <p>{movieData.overview}</p>
+                                <ButtonGroup className=''>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.overview, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
+                                </ButtonGroup>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </Container>
@@ -77,17 +103,24 @@ function SingleMoviePage( {user}) {
                 </Row>
                 <Row>
                     <Container className='reviews-container'>
-                                <div className='col reviews-container'>
-                                    {
-                                        reviews && reviews.map(review => ( 
-                                            <div key={review.id} className='review-container p-5'>
-                                                <p><strong> user: </strong> {review.author}</p>
-                                                <p>{review.content}</p>
-                                                <p><strong>created: </strong>{review.created_at}</p>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                        <div className='col reviews-container'>
+                            {
+                                reviews && reviews.map(review => (
+                                    <div key={review.id} className='review-container p-5'>
+                                        <p><strong> user: </strong> {review.author}</p>
+                                        <p>{review.content}</p>
+                                        <p><strong>created: </strong>{review.created_at}</p>
+                                        <ButtonGroup className=''>
+                                            <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(`Author: ${review.author} His review: ${review.content}`, 'UK English Female')} >Speak</Button>
+                                            <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
+                                            <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
+                                            <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
+                                        </ButtonGroup>
+                                    </div>
+                                ))
+                            }
+
+                        </div>
                     </Container>
                 </Row>
             </div>
