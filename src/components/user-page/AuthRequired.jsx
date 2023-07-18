@@ -4,10 +4,8 @@ import { getLoggedInUser, validateAccess } from "../../local-storage/fakeDB";
 const AuthRequired = () => {
   const notValidated = <Navigate to="/" />;
   const user = getLoggedInUser();
-  console.log(user);
   if (user) {
     let isLoggedIn = validateAccess(user.accessToken, user.id);
-    console.log(isLoggedIn);
     if (!isLoggedIn) {
       return notValidated;
     }
