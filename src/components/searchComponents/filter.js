@@ -6,7 +6,7 @@ import SearchBar from "./searchBar";
 import { useEffect } from "react";
 
 
-function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear } ) {
+function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedGenre, setSelectedGenre, selectedLanguages, setSelectedLanguages, selectedYear, setSelectedYear, sortOption, setSortOption } ) {
 
     /* Genre filters:  */
     const genres = [
@@ -108,7 +108,19 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                         <Accordion.Header className="d-flex align-items-start m-2" > Relase year: </Accordion.Header>
                         <Accordion.Body>
                             <Form.Group>
-                                <Form.Control placeholder="Enter year..." type="text" onChange={(event) => setSelectedYear(event.target.value) } ></Form.Control>
+                                <Form.Control placeholder="Enter year..." type="text" onChange={(event) => setSelectedYear(event.target.value)} ></Form.Control>
+                            </Form.Group>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header className="d-flex align-items-start m-2" > Sort by: </Accordion.Header>
+                        <Accordion.Body>
+                            <Form.Group>
+                                <Form.Control as="select" onChange={(event) => setSortOption(event.target.value)}>
+                                    <option value="">Select...</option>
+                                    <option value="title">Title</option>
+                                    <option value="year">Release Year</option>
+                                </Form.Control>
                             </Form.Group>
                         </Accordion.Body>
                     </Accordion.Item>

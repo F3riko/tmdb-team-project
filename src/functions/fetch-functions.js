@@ -1,6 +1,6 @@
 /* fetch function for getting movie data: ------------- */
 /* Params for fetch: */
-async function fetchFunction(url) {
+async function fetchFunction(url, singleMovie = false) {
     const tokenAddress = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxM2E3ZTdmNmFlODg1NzVjMDY5YzJiZjVhN2IxZjZjMCIsInN1YiI6IjY0OWIxODgwMjk3NWNhMDBjODgzMDQxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pVyp5VbRWguA2sJL3w0Khz_oN9HTmiKmAoUe-8H0Fu0';
 
     const options = {
@@ -14,12 +14,12 @@ async function fetchFunction(url) {
     const data = await response.json();
     console.log(data.results)
 
-    return data.results;
+    return singleMovie ? data : data.results;
 };
 
 /* Handle loading  */
 function loadingState(loadingstate){
-    if (loadingState) { /* check for a boolean value, if its true, the data is not fetched yet */
+    if (loadingstate) { /* check for a boolean value, if its true, the data is not fetched yet */
         return <div> Please wait... </div>
     }
 };
@@ -33,11 +33,16 @@ function loadingState(loadingstate){
  };
 
 /* Get url */
-function getUrl(query, selectedGenre, selectedLanguages, selectedYear){
+function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id){
     const baseUrl = `https://api.themoviedb.org/3/`;
 
     let finalEndPoint = '';
     let additionalParameters = ''
+
+    if(id){
+        let singleMovieUrl = `https://api.themoviedb.org/3/movie/${id}`
+        return singleMovieUrl;
+    };
 
     if (query){
         finalEndPoint = `search/movie?query=${encodeURIComponent(query)}`;
@@ -47,15 +52,15 @@ function getUrl(query, selectedGenre, selectedLanguages, selectedYear){
 
     if (selectedYear){
         additionalParameters += `&primary_release_year=${selectedYear}`;
-    }
+    };
 
     if (selectedGenre && selectedGenre.length > 0) {
         additionalParameters += `&with_genres=${selectedGenre.join(',')}`
-    }
+    };
 
     if (selectedLanguages) {
         additionalParameters += `&with_original_language=${selectedLanguages}`
-    }
+    };
 
     const url = `${baseUrl}${finalEndPoint}${additionalParameters}`;
 
