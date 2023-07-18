@@ -4,13 +4,9 @@ import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
 
 const MainPage = ({ homeList, homeType, selectedGenre, selectedVoice }) => {
-  const playVoice = () => {
-    let testVoice = setTimeout(window.responsiveVoice.speak("Hello", selectedVoice))
-  }
   return (
     <>
       <h1>Main page</h1>
-      <Button onClick={playVoice}>Say hello</Button>
       <MovieGallery moviesList={homeList} listType={homeType}></MovieGallery>
       {selectedGenre ? 
         <MovieGallery
