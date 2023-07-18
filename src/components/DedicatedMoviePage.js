@@ -50,28 +50,20 @@ function SingleMoviePage( {user}) {
                         <div className='col overview-container'>
                             <div className='movie-title'>
                                 <strong>{movieData.original_title}</strong>
-<<<<<<< Updated upstream
-                                <button onClick={() => window.responsiveVoice.speak(movieData.original_title, selectedVoice)} ></button>
-=======
                                 <ButtonGroup className=''>
-                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.original_title, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.original_title, selectedVoice)} >Speak</Button>
                                     <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
                                 </ButtonGroup>
->>>>>>> Stashed changes
                             </div>
                             <div>
                                 <p><strong>Score:</strong> {movieData.vote_average} </p>
                                 <p><strong>Relase date:</strong> {movieData.release_date} </p>
-<<<<<<< Updated upstream
-                                <button onClick={() => {console.log(selectedVoice); window.responsiveVoice.speak(movieData.release_date, selectedVoice)} }></button>
                                 <p><strong>Watched: </strong> </p>
                                 <p>{movieData.overview}</p>
-                                <button onClick={() => window.responsiveVoice.speak(movieData.overview, selectedVoice)} ></button>
-=======
                                 <ButtonGroup className=''>
-                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.release_date, 'UK English Female')} >Speak</Button>
+                                    <Button className='bg-warning' onClick={() => window.responsiveVoice.speak(movieData.release_date, selectedVoice)} >Speak</Button>
                                     <Button className='bg-warning' onClick={(() => window.responsiveVoice.cancel())}>Stop</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
@@ -84,7 +76,6 @@ function SingleMoviePage( {user}) {
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.pause()}>Pause</Button>
                                     <Button className='bg-warning' onClick={() => window.responsiveVoice.resume()}>Resume</Button>
                                 </ButtonGroup>
->>>>>>> Stashed changes
                             </div>
                         </div>
                     </Container>
