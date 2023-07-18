@@ -55,6 +55,7 @@ export const logOutUser = () => {
   const currentUser = getLoggedInUser();
   if (currentUser) {
     localStorage.removeItem("loggedIn");
+    localStorage.removeItem("viewedMoviesData");
   }
 };
 
@@ -102,5 +103,26 @@ export const saveMovieInHistory = (movieId) => {
     currentUser.viewHistory.push(movieId);
     updateUserInfo(currentUser);
   }
-  console.log(currentUser);
+};
+
+export const getViewMoviesData = () => {
+  const movies = localStorage.getItem("viewedMoviesData");
+  if (movies) {
+    return JSON.parse(movies);
+  }
+  return false;
+};
+
+export const setViewMoviesData = (moviesData) => {
+  localStorage.setItem("viewedMoviesData", JSON.stringify(moviesData));
+};
+
+export const deleteViewHistory = () => {
+  const user = getLoggedInUser();
+  if (user) {
+    user.viewHistory = [];
+    updateUserInfo(user);
+    localStorage.removeItem("viewedMoviesData");
+  }
+  return false;
 };

@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import FilterViewHistoryBar from "./FilterViewHistoryBar";
 
 function ViewHistoryGallery({ movies }) {
-  const defaultMovies = movies;
-  const [filteredMovies, setFilteredMovies] = useState(defaultMovies);
+  const [defaultMovies, setDefaultMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
+  useEffect(() => {
+    setDefaultMovies(movies);
+    setFilteredMovies(movies);
+  }, [movies]);
+
   return (
     <Container fluid className="p-3 text-center" style={{ overflowX: "auto" }}>
       <Row>
@@ -16,14 +22,10 @@ function ViewHistoryGallery({ movies }) {
         />
       </Row>
       <Row className="flex-nowrap overflow-auto">
-        {filteredMovies[1] ? (
+        {filteredMovies[0] ? (
           filteredMovies.map((movie) => (
-            <Col md={3} key={movie.id}>
-              <Link
-                to={`/movie/${movie.id}`}
-                as={Card.Body}
-                className="card-link"
-              >
+            <Col xs={12} md={3} key={movie.id}>
+              <Link to={`/movie/${movie.id}`} className="card-link">
                 <Card className="h-100">
                   <Card.Img
                     variant="top"
