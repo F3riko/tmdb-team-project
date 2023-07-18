@@ -93,8 +93,7 @@ function App() {
             selectedLanguages={selectedLanguages} />}>
           <Route index element={<MainPage
                                   homeList={homeList}
-                                  homeType={user.homepage}
-                                  selectedVoice={user.voice.name}/>} />
+                                  homeType={user.homepage}/>} />
           <Route path="/movie/:id" element={<SingleMoviePage user={user}/>} />
           <Route element={<AuthRequired />}>
             <Route path="user/:id" element={<UserPage
