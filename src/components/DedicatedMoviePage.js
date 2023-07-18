@@ -9,8 +9,10 @@ function SingleMoviePage( ) {
     const { id } = useParams();
     const [ images, setImages ] = useState([]);
     const [ movieData, setMovieData ] = useState([]);
-    
     saveMovieInHistory(id)
+
+    const [ reviews, setReviews ] = useState([]);
+
 
     useEffect(
         () => {
@@ -22,14 +24,17 @@ function SingleMoviePage( ) {
             let movieImageUrl = getUrl(null, null, null, null, id, true);
             fetchFunction(movieImageUrl, false, true)
                 .then(movieimage => setImages(movieimage))
-                .catch(error => console.log('Error during fetching movie data', error))
+                .catch(error => console.log('Error during fetching movie images', error))
             console.log(images)
+
+            let movieReviewsUrl = `https://api.themoviedb.org/3/movie/${id}/reviews`;
+            fetchFunction(movieReviewsUrl, true, false)
+                .then(moviereviews => setReviews(moviereviews.results))
+                .catch(error => console.log('Error during fetching moview reviews.', error))
+                console.log(reviews)
         }, [id]
     );
 
-    /*
-
-    */
     return (
         <>
             <div className='dedicated-body'>
@@ -37,6 +42,7 @@ function SingleMoviePage( ) {
                     <Container className='details-body row p-5'>
                         <div className='col-md-4'>
                             <img
+                                key={movieData.id}
                                 src={`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`}
                                 style={{ maxWidth: '100%', maxHeight: '400px' }}
                             />
@@ -67,6 +73,21 @@ function SingleMoviePage( ) {
                                 />
                             ))}
                         </div>
+                    </Container>
+                </Row>
+                <Row>
+                    <Container className='reviews-container'>
+                                <div className='col reviews-container'>
+                                    {
+                                        reviews && reviews.map(review => ( 
+                                            <div key={review.id} className='review-container p-5'>
+                                                <p><strong> user: </strong> {review.author}</p>
+                                                <p>{review.content}</p>
+                                                <p><strong>created: </strong>{review.created_at}</p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
                     </Container>
                 </Row>
             </div>
