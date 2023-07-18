@@ -5,6 +5,7 @@ import { fetchFunction, getUrl } from "../../functions/fetch-functions";
 import Spinner from "react-bootstrap/Spinner";
 import { getLoggedInUser } from "../../local-storage/fakeDB";
 import ViewHistoryGallery from "./ViewHistoryGallery";
+import FilterViewHistoryBar from "./FilterViewHistoryBar";
 
 const UserPage = ({homeListType, setHomeListType, user, setUser}) => {
   const [moviesFromHistory, setMoviesFromHistory] = useState([]);
