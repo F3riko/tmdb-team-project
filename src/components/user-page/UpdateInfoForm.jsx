@@ -17,7 +17,7 @@ import { nanoid } from "nanoid";
 import shortHash from "short-hash";
 import { getVoices } from "../../sing-up-flow/formValidations";
 
-const UpdateInfoForm = ({ user, setUser }) => {
+const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
   const [voices, setVoices] = useState([]);
 
   useEffect(() => {
@@ -141,6 +141,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
       setUser(getLoggedInUser());
       setFormData(defaultFormData);
     }
+    console.log(localStorage)
   };
 
   const ButtonReset = (fieldId) => {
@@ -243,7 +244,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
         <Form.Label>
           What movies would you like to see on your homepage?
         </Form.Label>
-        {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
+        {["Most Popular", "Top Rated", "Upcoming"].map((option) => {
           return (
             <Form.Check
               checked={formData.homepage.value === option}

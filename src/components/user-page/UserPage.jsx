@@ -6,8 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { getLoggedInUser } from "../../local-storage/fakeDB";
 import ViewHistoryGallery from "./ViewHistoryGallery";
 
-const UserPage = () => {
-  const [user, setUser] = useState(getLoggedInUser());
+const UserPage = ({homeListType, setHomeListType, user, setUser}) => {
   const [moviesFromHistory, setMoviesFromHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +52,11 @@ const UserPage = () => {
           <Row>
             <Col xs={4} md={10} className="p-5">
               <h5 className="text-center mb-3">Edit profile info</h5>
-              <UpdateInfoForm setUser={setUser} user={user} />
+              <UpdateInfoForm
+                setUser={setUser}
+                user={user}
+                homeListType={homeListType}
+                setHomeListType={setHomeListType}/>
             </Col>
           </Row>
         </Col>

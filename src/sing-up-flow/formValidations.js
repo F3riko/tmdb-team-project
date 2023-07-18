@@ -1,6 +1,7 @@
 import {
   getTakenUsernames,
   saveTakenUsernamesInLS,
+  getLoggedInUser
 } from "../local-storage/fakeDB";
 
 // Await this one
@@ -146,12 +147,12 @@ export const defaultFormData = {
   },
   homepage: {
     name: "homepage",
-    value: "",
+    value: getLoggedInUser ? getLoggedInUser.homepage : "",
     validations: [],
     errors: [],
   },
   voice: {
-    name: "homepage",
+    name: "voice",
     value: "",
     validations: [],
     errors: [],
