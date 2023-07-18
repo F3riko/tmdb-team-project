@@ -24,10 +24,10 @@ const UserPage = () => {
             </Figure.Caption>
           </Figure>
         </Col>
-        <Col md={7} xs={12} className="profile-from-editor">
+        <Col md={9} xs={12} className="profile-from-editor">
           <p className="text-center">Edit profile info</p>
           <Row>
-            <Col xs={4}>
+            <Col xs={4} md={7}>
               <UpdateInfoForm setUser={setUser} user={user} />
             </Col>
           </Row>

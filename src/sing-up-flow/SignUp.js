@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   validateInput,
@@ -10,25 +8,27 @@ import {
   arePasswordsSame,
 } from "./formValidations";
 import Pagination from "react-bootstrap/Pagination";
-import { Typeahead } from "react-bootstrap-typeahead";
-import "react-bootstrap-typeahead/css/Typeahead.css";
-import { languages, genres } from "./formValidations";
 import { nanoid } from "nanoid";
 import { saveUserInLS, addTakenUsername } from "../local-storage/fakeDB";
 import shortHash from "short-hash";
-import { getVoices } from "./formValidations";
+import SignUpPage1 from "./signUpPages/SignUpPage1";
+import SignUpPage2 from "./signUpPages/SignUpPage2";
+import SignUpPage3 from "./signUpPages/SignUpPage3";
+import SignUpPage4 from "./signUpPages/SignUpPage4";
 
 function SignUp({ showInitial, handleClose }) {
+  // Set form data to default
+  const [formData, setFormData] = useState(defaultFormData);
   // Pegination section
   const [paginationData, setPaginationData] = useState({
     activePage: 1,
     PaginationItems: [],
   });
-
   useEffect(() => {
     setFormData(defaultFormData);
+    setPaginationData((prevData) => ({ ...prevData, activePage: 1 }));
   }, [showInitial]);
-
+  // Rerender pagination items when active page is changed
   useEffect(() => {
     const items = [];
     for (let number = 1; number <= 4; number++) {
@@ -58,32 +58,16 @@ function SignUp({ showInitial, handleClose }) {
     }));
   }, [paginationData.activePage]);
 
-  const [voices, setVoices] = useState([]);
-
-  useEffect(() => {
-    const fetchVoices = async () => {
-      try {
-        const retrievedVoices = await getVoices();
-        setVoices(retrievedVoices);
-      } catch (error) {
-        console.error("Error retrieving voices:", error);
-      }
-    };
-
-    fetchVoices();
-  }, []);
-
-  const [formData, setFormData] = useState(defaultFormData);
-
   const handleFieldChange = (event) => {
     const { id, value } = event.target;
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [id]: { ...prevFormData[id], value: value },
+        [id]: { ...prevFormData[id], value: value, errors: [] },
       };
     });
   };
+
   const handleFieldBlur = (event) => {
     const { id } = event.target;
     if (formData[id].value) {
@@ -98,6 +82,7 @@ function SignUp({ showInitial, handleClose }) {
       }
     }
   };
+
   const renderErrors = (formDataKey) => {
     let errors;
     if (formData[formDataKey].errors) {
@@ -112,6 +97,7 @@ function SignUp({ showInitial, handleClose }) {
     }
     return errors;
   };
+
   const handleTypeHeadChange = (value, id) => {
     setFormData((prevFormData) => {
       return {
@@ -120,6 +106,7 @@ function SignUp({ showInitial, handleClose }) {
       };
     });
   };
+
   const handleTypeHeadBlur = (id) => {
     if (formData[id].value) {
       const errors = validateInput(id, formData);
@@ -133,6 +120,50 @@ function SignUp({ showInitial, handleClose }) {
       }
     }
   };
+
+  const handleNextPage = (event) => {
+    event.preventDefault();
+    let isError = false;
+    Object.keys(formData).forEach((name) => {
+      const errors = validateInput(name, formData);
+      if (errors.length) {
+        isError = true;
+        setFormData((prevFormData) => {
+          return {
+            ...prevFormData,
+            [name]: { ...prevFormData[name], errors: errors },
+          };
+        });
+      }
+    });
+    if (paginationData.activePage === 1) {
+      const error = arePasswordsSame(
+        formData.password.value,
+        formData.passwordRepeat.value
+      );
+      if (error) {
+        isError = true;
+        if (!formData["password"].errors.includes(error)) {
+          setFormData((prevFormData) => {
+            return {
+              ...prevFormData,
+              password: {
+                ...prevFormData["password"],
+                errors: [...prevFormData["password"].errors, error],
+              },
+            };
+          });
+        }
+      }
+    }
+    if (!isError) {
+      setPaginationData((prevData) => ({
+        ...prevData,
+        activePage: prevData.activePage + 1,
+      }));
+    }
+  };
+
   const handleSubmit = () => {
     // Create new user
     const newUser = {
@@ -163,44 +194,43 @@ function SignUp({ showInitial, handleClose }) {
     setFormData(defaultFormData);
     handleClose();
   };
-  const handleNextPage = (event) => {
-    event.preventDefault();
-    let isError = false;
-    Object.keys(formData).forEach((name) => {
-      const errors = validateInput(name, formData);
-      if (errors.length) {
-        isError = true;
-        setFormData((prevFormData) => {
-          return {
-            ...prevFormData,
-            [name]: { ...prevFormData[name], errors: errors },
-          };
-        });
-      }
-    });
-    if (paginationData.activePage === 1) {
-      const error = arePasswordsSame(
-        formData.password.value,
-        formData.passwordRepeat.value
-      );
-      if (error) {
-        isError = true;
-        setFormData((prevFormData) => {
-          return {
-            ...prevFormData,
-            password: {
-              ...prevFormData["password"],
-              errors: [...prevFormData["password"].errors, error],
-            },
-          };
-        });
-      }
-    }
-    if (!isError) {
-      setPaginationData((prevData) => ({
-        ...prevData,
-        activePage: prevData.activePage + 1,
-      }));
+
+  const renderSignUpPage = (activePage) => {
+    switch (activePage) {
+      case 1:
+        return (
+          <SignUpPage1
+            formData={formData}
+            handleFieldBlur={handleFieldBlur}
+            handleFieldChange={handleFieldChange}
+            renderErrors={renderErrors}
+          />
+        );
+      case 2:
+        return (
+          <SignUpPage2
+            handleTypeHeadBlur={handleTypeHeadBlur}
+            handleTypeHeadChange={handleTypeHeadChange}
+            renderErrors={renderErrors}
+          />
+        );
+      case 3:
+        return (
+          <SignUpPage3
+            formData={formData}
+            handleFieldChange={handleFieldChange}
+          />
+        );
+      case 4:
+        return (
+          <SignUpPage4
+            handleTypeHeadBlur={handleTypeHeadBlur}
+            handleTypeHeadChange={handleTypeHeadChange}
+            renderErrors={renderErrors}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -211,148 +241,7 @@ function SignUp({ showInitial, handleClose }) {
           <Modal.Title>Registration</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {paginationData.activePage === 1 && (
-            <Form>
-              <Form.Group className="mb-3" controlId="username">
-                <FloatingLabel
-                  controlId="username"
-                  label="Username"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    onChange={handleFieldChange}
-                    onBlur={handleFieldBlur}
-                    type="text"
-                    placeholder="Username"
-                    defaultValue={formData.username.value}
-                  />
-                  <Form.Text className="text-center">
-                    {renderErrors("username")}
-                  </Form.Text>
-                </FloatingLabel>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="password">
-                <FloatingLabel controlId="password" label="Password">
-                  <Form.Control
-                    onChange={handleFieldChange}
-                    onBlur={handleFieldBlur}
-                    type="password"
-                    placeholder="Password"
-                    defaultValue={formData.password.value}
-                  />
-                  <Form.Text className="text-center">
-                    {renderErrors("password")}
-                  </Form.Text>
-                </FloatingLabel>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="passwordRepeat">
-                <FloatingLabel
-                  controlId="passwordRepeat"
-                  label="Repeat password"
-                >
-                  <Form.Control
-                    onChange={handleFieldChange}
-                    onBlur={handleFieldBlur}
-                    type="password"
-                    placeholder="Repeat password"
-                    defaultValue={formData.passwordRepeat.value}
-                  />
-                  <Form.Text className="text-center">
-                    {renderErrors("passwordRepeat")}
-                  </Form.Text>
-                </FloatingLabel>
-              </Form.Group>
-            </Form>
-          )}
-          {paginationData.activePage === 2 && (
-            <Form>
-              <Form.Group className="mb-3" controlId="language">
-                <Typeahead
-                  onChange={(selected) =>
-                    handleTypeHeadChange(selected, "language")
-                  }
-                  onInputChange={(selected) =>
-                    handleTypeHeadChange(selected, "language")
-                  }
-                  onBlur={() => handleTypeHeadBlur("language")}
-                  id="language"
-                  options={languages}
-                  placeholder="Preferred language (optional)"
-                />
-                <Form.Text className="text-center">
-                  {renderErrors("language")}
-                </Form.Text>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="genre">
-                <Typeahead
-                  onInputChange={(selected) =>
-                    handleTypeHeadChange(selected, "genre")
-                  }
-                  onChange={(selected) =>
-                    handleTypeHeadChange(selected, "genre")
-                  }
-                  onBlur={() => handleTypeHeadBlur("genre")}
-                  id="genre"
-                  options={genres}
-                  placeholder="Favorite genre (optional)"
-                />
-                <Form.Text className="text-center">
-                  {renderErrors("genre")}
-                </Form.Text>
-              </Form.Group>
-            </Form>
-          )}
-          {paginationData.activePage === 3 && (
-            <Form>
-              <Form.Group className="mb-3" controlId="homepage">
-                <Form.Label>
-                  What movies would you like to see on your homepage?
-                </Form.Label>
-                {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
-                  return (
-                    <Form.Check
-                      checked={
-                        formData.homepage.value === option ? true : false
-                      }
-                      onChange={(e) => handleFieldChange(e)}
-                      value={option}
-                      key={nanoid()}
-                      type="radio"
-                      label={option}
-                      name={"homepage"}
-                    />
-                  );
-                })}
-              </Form.Group>
-            </Form>
-          )}
-          {paginationData.activePage === 4 && (
-            <Form>
-              <Form.Group className="mb-3" controlId="voice">
-                <Typeahead
-                  onInputChange={(selected) =>
-                    handleTypeHeadChange(selected, "voice")
-                  }
-                  onChange={(selected) =>
-                    handleTypeHeadChange(selected, "voice")
-                  }
-                  onBlur={() => handleTypeHeadBlur("voice")}
-                  id="voice"
-                  options={voices}
-                  placeholder="Preferable voice"
-                  labelKey="name"
-                />
-                <Form.Text className="text-center">
-                  {renderErrors("voice")}
-                </Form.Text>
-              </Form.Group>
-            </Form>
-          )}
-        </Modal.Body>
+        <Modal.Body>{renderSignUpPage(paginationData.activePage)}</Modal.Body>
 
         <Modal.Footer className="justify-content-between">
           <Button variant="secondary" onClick={handleClose}>

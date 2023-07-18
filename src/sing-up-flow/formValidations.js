@@ -1,6 +1,8 @@
-import { saveTakenUsernamesInLS } from "../local-storage/fakeDB";
+import {
+  getTakenUsernames,
+  saveTakenUsernamesInLS,
+} from "../local-storage/fakeDB";
 
-const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
 // Await this one
 (async () => {
   await saveTakenUsernamesInLS();
@@ -29,7 +31,7 @@ const isAlphanumericAndAllowedChars = (inputString) => {
 
 export const arePasswordsSame = (password, repeatPassword) => {
   if (password !== repeatPassword) {
-    return "Password shuld be the same!";
+    return "Password should be the same!";
   }
   return false;
 };
@@ -42,7 +44,8 @@ const isIncludedInArray = (value, array) => {
 };
 
 const isUsernameTaken = (value) => {
-  if (takenUsernames.includes(value)) {
+  const takenUsernames = getTakenUsernames();
+  if (takenUsernames && takenUsernames.includes(value.toLowerCase())) {
     return "This username is already taken";
   }
   return false;
