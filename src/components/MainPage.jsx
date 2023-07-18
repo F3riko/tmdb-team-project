@@ -3,9 +3,9 @@ import {fetchFunction} from "../functions/fetch-functions"
 import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
 
-const MainPage = ({ homeList, homeType, selectedGenre }) => {
+const MainPage = ({ homeList, homeType, selectedGenre, selectedVoice }) => {
   const playVoice = () => {
-    let testVoice = setTimeout(window.responsiveVoice.speak("Hello", "Latin Male"))
+    let testVoice = setTimeout(window.responsiveVoice.speak("Hello", selectedVoice))
   }
   return (
     <>

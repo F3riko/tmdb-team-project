@@ -6,7 +6,7 @@ import { getLoggedInUser } from "../../local-storage/fakeDB";
 import UpdateInfoForm from "./UpdateInfoForm";
 import Figure from "react-bootstrap/Figure";
 
-const UserPage = () => {
+const UserPage = ({homeListType, setHomeListType}) => {
   const [user, setUser] = useState(getLoggedInUser());
 
   return (
@@ -28,7 +28,11 @@ const UserPage = () => {
           <p className="text-center">Edit profile info</p>
           <Row>
             <Col xs={4} md={7}>
-              <UpdateInfoForm setUser={setUser} user={user} />
+              <UpdateInfoForm
+                setUser={setUser}
+                user={user}
+                homeListType={homeListType}
+                setHomeListType={setHomeListType}/>
             </Col>
           </Row>
         </Col>

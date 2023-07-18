@@ -43,6 +43,8 @@ function App() {
   const [ selectedLanguages, setSelectedLanguages ] = useState([]);
   /* Year filter states */
   const [ selectedYear, setSelectedYear ] = useState([]);
+  // Selected voice state:
+  const [selectedVoice, setSelectedVoice] = useState('UK English Female')
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
@@ -89,7 +91,7 @@ function App() {
           <Route index element={<MainPage homeList={homeList} homeType='Upcoming'/>} />
           <Route path="/movie/:id" element={<SingleMoviePage />} />
           <Route element={<AuthRequired />}>
-            <Route path="user/:id" element={<UserPage />} />
+            <Route path="user/:id" element={<UserPage homeListType={homeListType} setHomeListType={setHomeListType}/>} />
           </Route>
           <Route path="searchResults" element={
             <SearchPage
