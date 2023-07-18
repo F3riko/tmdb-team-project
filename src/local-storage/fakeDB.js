@@ -95,3 +95,12 @@ export const getTakenUsernames = () => {
   }
   return false;
 };
+
+export const saveMovieInHistory = (movieId) => {
+  const currentUser = getLoggedInUser();
+  if (currentUser && movieId && !currentUser.viewHistory.includes(movieId)) {
+    currentUser.viewHistory.push(movieId);
+    updateUserInfo(currentUser);
+  }
+  console.log(currentUser);
+};
