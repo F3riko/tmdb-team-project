@@ -102,6 +102,7 @@ export const saveMovieInHistory = (movieId) => {
   if (currentUser && movieId && !currentUser.viewHistory.includes(movieId)) {
     currentUser.viewHistory.push(movieId);
     updateUserInfo(currentUser);
+    localStorage.removeItem("viewedMoviesData");
   }
 };
 

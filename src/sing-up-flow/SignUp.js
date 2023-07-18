@@ -177,6 +177,14 @@ function SignUp({ showInitial, handleClose }) {
           newUser[key] = shortHash(formData[key].value);
         } else {
           if (key === "username") {
+            addTakenUsername(formData[key].value);
+            newUser[key] = formData[key].value;
+          } else if (key === "voice") {
+            newUser[key] = formData[key]
+              ? formData[key]
+              : { name: "French Female" };
+          } else {
+            newUser[key] = formData[key].value;
             addTakenUsername(formData[key].value); 
           }
           newUser[key] = formData[key].value;
