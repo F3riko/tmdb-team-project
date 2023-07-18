@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { deleteViewHistory } from "../../local-storage/fakeDB";
+import '../../styles/DedicatedMoviePage.css'
 
 const FilterViewHistoryBar = ({
   moviesToFilter,

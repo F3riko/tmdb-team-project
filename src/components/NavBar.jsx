@@ -106,9 +106,12 @@ const NavComponent = ({
   };
 
   return (
-    <Container id="nav-bar">
+    <Container className="navBar" id="nav-bar">
       <Row>
-        <Col md="auto">
+        <Col>
+        <p><strong>Home</strong></p>
+        </Col>
+        <Col className="m-1">
           <Form controlid="search">
             <Stack direction="horizontal" gap={2}>
               <Form.Control
