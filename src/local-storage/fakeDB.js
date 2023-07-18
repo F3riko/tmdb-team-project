@@ -28,8 +28,13 @@ export const saveTakenUsernamesInLS = async () => {
 };
 
 export const addTakenUsername = (username) => {
-  const takenUsernames = JSON.parse(localStorage.getItem("takenUsernames"));
-  takenUsernames.push(username);
+  let takenUsernames = localStorage.getItem("takenUsernames");
+  if (takenUsernames) {
+    takenUsernames = JSON.parse(takenUsernames);
+  } else {
+    takenUsernames = [];
+  }
+  takenUsernames.push(username.toLowerCase());
   localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
 };
 
@@ -46,6 +51,13 @@ export const logInUser = (username, password) => {
   return false;
 };
 
+export const logOutUser = () => {
+  const currentUser = getLoggedInUser();
+  if (currentUser) {
+    localStorage.removeItem("loggedIn");
+  }
+};
+
 const setLoggedInUser = (loggedInUser) => {
   localStorage.setItem("loggedIn", JSON.stringify(loggedInUser));
 };
@@ -53,7 +65,8 @@ const setLoggedInUser = (loggedInUser) => {
 export const getLoggedInUser = () => {
   const userLoggedIn = localStorage.getItem("loggedIn");
   if (userLoggedIn) {
-    return JSON.parse(userLoggedIn);
+    const parsedUser = JSON.parse(userLoggedIn);
+    return parsedUser;
   }
   return false;
 };
@@ -75,10 +88,10 @@ export const updateUserInfo = (newUserInfo) => {
   setLoggedInUser(newUserInfo);
 };
 
-export const saveMovieInUserHistory = (movieId) => {
-  const user = getUsersFromLS();
-
-  // if (movieId && ) {
-
-  // }
+export const getTakenUsernames = () => {
+  const takenUsernames = localStorage.getItem("takenUsernames");
+  if (takenUsernames) {
+    return JSON.parse(takenUsernames);
+  }
+  return false;
 };
