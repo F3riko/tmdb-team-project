@@ -109,7 +109,7 @@ const NavComponent = ({
     <Container id="nav-bar">
       <Row>
         <Col md="auto">
-          <Form controlID="search">
+          <Form controlid="search">
             <Stack direction="horizontal" gap={2}>
               <Form.Control
                 placeholder="Search..."
@@ -128,7 +128,7 @@ const NavComponent = ({
           {currentUser && currentUser.username ? (
             <UserLoggedInProfile currentUser={currentUser} />
           ) : (
-            <Form controlID="login">
+            <Form controlid="login">
               <Row className="g-2 justify-content-md-right">
                 <Col md="auto">
                   <Form.Control

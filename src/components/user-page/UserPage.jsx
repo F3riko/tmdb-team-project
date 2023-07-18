@@ -6,8 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { getLoggedInUser } from "../../local-storage/fakeDB";
 import ViewHistoryGallery from "./ViewHistoryGallery";
 
-const UserPage = ({homeListType, setHomeListType}) => {
-  const [user, setUser] = useState(getLoggedInUser());
+const UserPage = ({homeListType, setHomeListType, user, setUser}) => {
   const [moviesFromHistory, setMoviesFromHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 

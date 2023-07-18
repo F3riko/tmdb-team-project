@@ -21,6 +21,7 @@ import UserPage from "./components/user-page/UserPage";
 import AuthRequired from "./components/user-page/AuthRequired";
 import MainPage from "./components/MainPage";
 import SingleMoviePage from "./components/DedicatedMoviePage";
+import {getLoggedInUser} from './local-storage/fakeDB'
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
@@ -45,21 +46,25 @@ function App() {
   const [ selectedYear, setSelectedYear ] = useState([]);
   // Selected voice state:
   const [selectedVoice, setSelectedVoice] = useState('UK English Female')
+  // Logged-in user state:
+  const [user, setUser] = useState(getLoggedInUser())
 
   /* Fetch the movie details, using the function from fetch-functions.js */
   useEffect(() => {
     let homeListURL;
-    switch(homeListType){
-      case '':
-      case 'Upcoming':
-        homeListURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
-        break;
-      case 'Popular':
-        homeListURL = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
-        break;
-      case 'Top Rated':
-        homeListURL = "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1"
-    }
+    if (user){
+      switch(user.homepage){
+        case '':
+        case 'Upcoming':
+          homeListURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
+          break;
+        case 'Most Popular':
+          homeListURL = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1"
+          break;
+        case 'Top Rated':
+          homeListURL = "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1"
+      }
+    } else homeListURL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1"
     fetchFunction(homeListURL)
       .then((movies) => {
         setHomeList(movies);
@@ -69,14 +74,14 @@ function App() {
         console.log("Error fetching the movies", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [user]);
 
-  /* check the loadin state: */
+  /* check the loading state: */
   loadingState(isLoading);
 
   /* handle Search: */
   useEffect(() => {
-      handleSearch(query,setSearchResults, selectedGenre, selectedLanguages, selectedYear);
+      handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear);
   }, [query, selectedGenre, selectedLanguages, selectedYear]);
 
   return (
@@ -88,10 +93,14 @@ function App() {
             setSearchResults={setSearchResults} 
             selectedGenre={selectedGenre}
             selectedLanguages={selectedLanguages} />}>
-          <Route index element={<MainPage homeList={homeList} homeType='Upcoming'/>} />
+          <Route index element={<MainPage homeList={homeList} homeType={user.homepage}/>} />
           <Route path="/movie/:id" element={<SingleMoviePage />} />
           <Route element={<AuthRequired />}>
-            <Route path="user/:id" element={<UserPage homeListType={homeListType} setHomeListType={setHomeListType}/>} />
+            <Route path="user/:id" element={<UserPage
+                                              homeListType={homeListType}
+                                              setHomeListType={setHomeListType}
+                                              user={user}
+                                              setUser={setUser}/>} />
           </Route>
           <Route path="searchResults" element={
             <SearchPage
