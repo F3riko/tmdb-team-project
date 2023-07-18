@@ -58,6 +58,7 @@
 .profile-from-editor > p {
   font-size: larger;
 }
+<<<<<<< Updated upstream
 
 /* Navbar */
 
@@ -80,3 +81,23 @@
   background-color: grey;
   border-radius: 50%;
 }
+=======
+ .modalElement {
+  width: 1100px;
+  max-width: 100%; 
+ }
+
+.spacer {
+    flex-grow: 1;
+}
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-title{
+  font-size: xx-large;
+}
+>>>>>>> Stashed changes

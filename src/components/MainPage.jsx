@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 
 const MainPage = ({ homeList, homeType, selectedGenre }) => {
   const playVoice = () => {
-    let testVoice = setTimeout(window.responsiveVoice.speak("Hello", "Latin Male"))
+    let testVoice = setTimeout(window.responsiveVoice.speak("Hello", "UK English Female"))
   }
   return (
     <>
