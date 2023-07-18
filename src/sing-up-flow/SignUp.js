@@ -177,11 +177,9 @@ function SignUp({ showInitial, handleClose }) {
           newUser[key] = shortHash(formData[key].value);
         } else {
           if (key === "username") {
-            addTakenUsername(formData[key].value);
-            newUser[key] = formData[key].value;
-          } else {
-            newUser[key] = formData[key].value;
+            addTakenUsername(formData[key].value); 
           }
+          newUser[key] = formData[key].value;
         }
       }
     });

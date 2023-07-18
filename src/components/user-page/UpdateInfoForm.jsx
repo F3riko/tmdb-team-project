@@ -268,7 +268,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
           options={voices}
           placeholder="Preferred voice"
           labelKey="name"
-          defaultInputValue={user.voice.name}
+          defaultInputValue={user.voice.name ? user.voice.name : "French Female"}
         />
         <Form.Text className="text-center">{renderErrors("voice")}</Form.Text>
       </Form.Group>

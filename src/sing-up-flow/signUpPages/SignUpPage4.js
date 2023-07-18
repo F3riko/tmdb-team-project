@@ -32,7 +32,7 @@ const SignUpPage4 = ({
           onBlur={() => handleTypeHeadBlur("voice")}
           id="voice"
           options={voices}
-          placeholder="Preferable voice"
+          placeholder="Preferred voice"
           labelKey="name"
         />
         <Form.Text className="text-center">{renderErrors("voice")}</Form.Text>
