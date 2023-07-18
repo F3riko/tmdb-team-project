@@ -12,8 +12,10 @@ async function fetchFunction(url, singleMovie = false, fetchImages = false ) {
     };
     const response = await fetch(url, options)
     const data = await response.json();
-    console.log(data.results)
-    console.log(data.backdrops)
+
+    //Not sure what these are, but they sure are clogging up the console
+    // console.log(data.results)
+    // console.log(data.backdrops)
 
     if (fetchImages) {
         return data.backdrops || data.results
@@ -34,7 +36,6 @@ function loadingState(loadingstate){
     let url = getUrl(query, selectedGenre, selectedLanguages, selectedYear); /* gets the query from the state, makes the fetch url based on it */
     const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
     setSearchResults(searchResults); /* save it to search results state */
-    console.log('hello')
  };
 
 /* Get url */
@@ -44,7 +45,7 @@ function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id, fetch
     let finalEndPoint = '';
     let additionalParameters = ''
 
-    if(fetchImages === false && id){
+    if(!fetchImages && id){
         let singleMovieUrl = `https://api.themoviedb.org/3/movie/${id}`
         return singleMovieUrl;
     };
