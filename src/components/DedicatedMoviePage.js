@@ -46,6 +46,7 @@ function SingleMoviePage({ user }) {
   //   const [moviesFromHistory, setMoviesFromHistory] = useState([]);
   //   const [loading, setLoading] = useState(true);
 
+
   //   useEffect(() => {
   //     const fetchMoviesFromHistory = async () => {
   //       try {
@@ -54,6 +55,7 @@ function SingleMoviePage({ user }) {
   //             const movieDataUrl = getUrl(null, null, null, null, movieId);
   //             return fetchFunction(movieDataUrl, true);
   //           });
+
 
   //           const moviesFromHistoryData = await Promise.all(moviePromises);
   //           setMoviesFromHistory(moviesFromHistoryData);
