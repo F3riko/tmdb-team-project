@@ -1,6 +1,6 @@
 /* fetch function for getting movie data: ------------- */
 /* Params for fetch: */
-async function fetchFunction(url, singleMovie = false) {
+async function fetchFunction(url, singleMovie = false, fetchImages = false ) {
     const tokenAddress = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxM2E3ZTdmNmFlODg1NzVjMDY5YzJiZjVhN2IxZjZjMCIsInN1YiI6IjY0OWIxODgwMjk3NWNhMDBjODgzMDQxZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pVyp5VbRWguA2sJL3w0Khz_oN9HTmiKmAoUe-8H0Fu0';
 
     const options = {
@@ -13,6 +13,11 @@ async function fetchFunction(url, singleMovie = false) {
     const response = await fetch(url, options)
     const data = await response.json();
     console.log(data.results)
+    console.log(data.backdrops)
+
+    if (fetchImages) {
+        return data.backdrops || data.results
+    }
 
     return singleMovie ? data : data.results;
 };
@@ -33,16 +38,22 @@ function loadingState(loadingstate){
  };
 
 /* Get url */
-function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id){
+function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id, fetchImages = false){
     const baseUrl = `https://api.themoviedb.org/3/`;
 
     let finalEndPoint = '';
     let additionalParameters = ''
 
-    if(id){
+    if(fetchImages === false && id){
         let singleMovieUrl = `https://api.themoviedb.org/3/movie/${id}`
         return singleMovieUrl;
     };
+
+    if (fetchImages && id){
+        let movieImagesUrl = `https://api.themoviedb.org/3/movie/${id}/images`
+        console.log(movieImagesUrl)
+        return movieImagesUrl;
+    }
 
     if (query){
         finalEndPoint = `search/movie?query=${encodeURIComponent(query)}`;
@@ -67,10 +78,11 @@ function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id){
     return url; 
 }
 
+
 /* Export functions: */
 export {
     fetchFunction, 
     getUrl, 
     loadingState, 
-    handleSearch
+    handleSearch, 
 };
