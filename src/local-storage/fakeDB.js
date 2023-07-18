@@ -114,7 +114,10 @@ export const getViewMoviesData = () => {
 };
 
 export const setViewMoviesData = (moviesData) => {
-  localStorage.setItem("viewedMoviesData", JSON.stringify(moviesData));
+  if (moviesData) {
+    localStorage.setItem("viewedMoviesData", JSON.stringify(moviesData));
+  }
+  return false;
 };
 
 export const deleteViewHistory = () => {
