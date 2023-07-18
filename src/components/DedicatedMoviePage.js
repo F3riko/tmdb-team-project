@@ -18,6 +18,7 @@ function SingleMoviePage({ user }) {
   const [reviews, setReviews] = useState([]);
   const selectedVoice = user.voice.name;
 
+
   useEffect(() => {
     let movieDataUrl = getUrl(null, null, null, null, id);
     fetchFunction(movieDataUrl, true)
@@ -54,7 +55,6 @@ function SingleMoviePage({ user }) {
   //             const movieDataUrl = getUrl(null, null, null, null, movieId);
   //             return fetchFunction(movieDataUrl, true);
   //           });
-
   //           const moviesFromHistoryData = await Promise.all(moviePromises);
   //           setMoviesFromHistory(moviesFromHistoryData);
   //           setViewMoviesData(moviesFromHistoryData);
