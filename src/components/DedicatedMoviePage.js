@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom';
 import { fetchFunction, getUrl } from '../functions/fetch-functions';
+import { saveMovieInHistory } from '../local-storage/fakeDB';
 
 
 function SingleMoviePage( ) {
     const { id } = useParams();
     const [ images, setImages ] = useState([]);
     const [ movieData, setMovieData ] = useState([]);
+    
+    saveMovieInHistory(id)
 
     useEffect(
         () => {

@@ -80,3 +80,11 @@
   background-color: grey;
   border-radius: 50%;
 }
+
+/* History gallery */
+.card-description,
+.card-link {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none !important;
+}
