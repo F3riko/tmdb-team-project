@@ -11,7 +11,6 @@ import Pagination from "react-bootstrap/Pagination";
 import { nanoid } from "nanoid";
 import { saveUserInLS, addTakenUsername } from "../local-storage/fakeDB";
 import shortHash from "short-hash";
-import { getVoices } from "./formValidations";
 import SignUpPage1 from "./signUpPages/SignUpPage1";
 import SignUpPage2 from "./signUpPages/SignUpPage2";
 import SignUpPage3 from "./signUpPages/SignUpPage3";
@@ -58,20 +57,6 @@ function SignUp({ showInitial, handleClose }) {
       PaginationItems: items,
     }));
   }, [paginationData.activePage]);
-  // Fetching voices for autocompletion
-  const [voices, setVoices] = useState([]);
-  useEffect(() => {
-    const fetchVoices = async () => {
-      try {
-        const retrievedVoices = await getVoices();
-        setVoices(retrievedVoices);
-      } catch (error) {
-        console.error("Error retrieving voices:", error);
-      }
-    };
-
-    fetchVoices();
-  }, []);
 
   const handleFieldChange = (event) => {
     const { id, value } = event.target;
@@ -242,7 +227,6 @@ function SignUp({ showInitial, handleClose }) {
             handleTypeHeadBlur={handleTypeHeadBlur}
             handleTypeHeadChange={handleTypeHeadChange}
             renderErrors={renderErrors}
-            voices={voices}
           />
         );
       default:
