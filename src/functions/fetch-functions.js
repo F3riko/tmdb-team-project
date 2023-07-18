@@ -44,7 +44,7 @@ function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id, fetch
     let finalEndPoint = '';
     let additionalParameters = ''
 
-    if(fetchImages === false && id){
+    if(!fetchImages && id){
         let singleMovieUrl = `https://api.themoviedb.org/3/movie/${id}`
         return singleMovieUrl;
     };

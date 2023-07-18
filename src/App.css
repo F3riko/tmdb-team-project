@@ -58,6 +58,10 @@
 .profile-from-editor > p {
   font-size: larger;
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 /* Navbar */
 
@@ -80,8 +84,13 @@
   background-color: grey;
   border-radius: 50%;
 }
+<<<<<<< Updated upstream
 
 .modalElement {
+
+=======
+ .modalElement {
+>>>>>>> Stashed changes
   width: 1100px;
   max-width: 100%;
 }
@@ -100,6 +109,8 @@
   font-size: xx-large;
 }
 
+<<<<<<< Updated upstream
+
 /* History gallery */
 .card-description,
 .card-link {
@@ -107,3 +118,5 @@
   color: #333;
   text-decoration: none !important;
 }
+=======
+>>>>>>> Stashed changes
