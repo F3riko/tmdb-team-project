@@ -58,6 +58,7 @@ const FilterViewHistoryBar = ({
 
   const deleteAllHistory = () => {
     deleteViewHistory();
+    setMoviesAfterFilter([]);
   };
 
   const filterMovies = () => {
