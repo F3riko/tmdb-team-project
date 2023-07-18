@@ -185,7 +185,9 @@ function SignUp({ showInitial, handleClose }) {
               : { name: "French Female" };
           } else {
             newUser[key] = formData[key].value;
+            addTakenUsername(formData[key].value); 
           }
+          newUser[key] = formData[key].value;
         }
       }
     });

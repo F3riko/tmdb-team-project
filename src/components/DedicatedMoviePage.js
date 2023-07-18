@@ -13,7 +13,8 @@ function SingleMoviePage({ user }) {
   const [movieData, setMovieData] = useState([]);
   saveMovieInHistory(id);
   const [reviews, setReviews] = useState([]);
-  const selectedVoice = user.voice.name;
+  const selectedVoice = user ? (user.voice.name ? user.voice.name :"French Female") : "French Female";
+
 
   useEffect(() => {
     let movieDataUrl = getUrl(null, null, null, null, id);
@@ -71,6 +72,7 @@ function SingleMoviePage({ user }) {
     }
   }, [user.viewHistory]);
 
+
   return (
     <>
       <div className="dedicated-body">
@@ -92,7 +94,7 @@ function SingleMoviePage({ user }) {
                     onClick={() =>
                       window.responsiveVoice.speak(
                         movieData.original_title,
-                        "UK English Female"
+                        selectedVoice
                       )
                     }
                   >
@@ -131,7 +133,7 @@ function SingleMoviePage({ user }) {
                     onClick={() =>
                       window.responsiveVoice.speak(
                         movieData.release_date,
-                        "UK English Female"
+                        selectedVoice
                       )
                     }
                   >
@@ -166,7 +168,7 @@ function SingleMoviePage({ user }) {
                     onClick={() =>
                       window.responsiveVoice.speak(
                         movieData.overview,
-                        "UK English Female"
+                        selectedVoice
                       )
                     }
                   >
@@ -235,7 +237,7 @@ function SingleMoviePage({ user }) {
                         onClick={() =>
                           window.responsiveVoice.speak(
                             `Author: ${review.author} His review: ${review.content}`,
-                            "UK English Female"
+                            selectedVoice
                           )
                         }
                       >
