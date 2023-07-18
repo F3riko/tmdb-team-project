@@ -37,7 +37,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
 
   const handleFieldChange = (event) => {
     let { id, value } = event.target;
-    const updatedId = id.includes("homepage") ? "homepage" : id;
+    const updatedId = event.target.name.includes("homepage") ? "homepage" : id;
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
@@ -143,9 +143,19 @@ const UpdateInfoForm = ({ user, setUser }) => {
     }
   };
 
-  const ButtonReset = () => {
+  const ButtonReset = (fieldId) => {
     return (
-      <Button variant="primary" onClick={"sa"}>
+      <Button
+        variant="primary"
+        onClick={() => {
+          console.log(fieldId);
+          setUser((prevData) => ({
+            ...prevData,
+            [fieldId]: { ...prevData[fieldId], value: "" },
+          }));
+          console.log(user);
+        }}
+      >
         Reset
       </Button>
     );
@@ -226,6 +236,7 @@ const UpdateInfoForm = ({ user, setUser }) => {
           defaultInputValue={user.genre}
         />
         <Form.Text className="text-center">{renderErrors("genre")}</Form.Text>
+        {/* <ButtonReset fieldId={"genre"} /> */}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="homepage">
@@ -235,13 +246,14 @@ const UpdateInfoForm = ({ user, setUser }) => {
         {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
           return (
             <Form.Check
-              checked={formData.homepage.value === option ? true : false}
+              checked={formData.homepage.value === option}
               onChange={(e) => handleFieldChange(e)}
               value={option}
               key={nanoid()}
               type="radio"
               label={option}
               name={"homepage"}
+              id={nanoid()}
             />
           );
         })}
