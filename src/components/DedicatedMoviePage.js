@@ -91,11 +91,12 @@ function SingleMoviePage({ user }) {
                 <ButtonGroup className="">
                   <Button
                     className="bg-warning"
-                    onClick={() =>
+                    onClick={() =>{
                       window.responsiveVoice.speak(
                         movieData.original_title,
                         selectedVoice
                       )
+                    }
                     }
                   >
                     Speak
