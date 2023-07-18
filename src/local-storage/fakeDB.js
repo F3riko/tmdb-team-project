@@ -28,24 +28,29 @@ export const saveTakenUsernamesInLS = async () => {
 };
 
 export const addTakenUsername = (username) => {
-  let takenUsernames = localStorage.getItem("takenUsernames");
-  if (takenUsernames) {
-    takenUsernames = JSON.parse(takenUsernames);
-  } else {
-    takenUsernames = [];
+  if (username) {
+    let takenUsernames = localStorage.getItem("takenUsernames");
+    if (takenUsernames) {
+      takenUsernames = JSON.parse(takenUsernames);
+    } else {
+      takenUsernames = [];
+    }
+    takenUsernames.push(username.toLowerCase());
+    localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
   }
-  takenUsernames.push(username.toLowerCase());
-  localStorage.setItem("takenUsernames", JSON.stringify(takenUsernames));
+  return false;
 };
 
 export const logInUser = (username, password) => {
   const users = getUsersFromLS();
   let loggedInUser = null;
-  for (const user of Object.values(users)) {
-    if (user.username === username && user.password === password) {
-      loggedInUser = user;
-      setLoggedInUser(loggedInUser);
-      return loggedInUser.id;
+  if (users) {
+    for (const user of Object.values(users)) {
+      if (user.username === username && user.password === password) {
+        loggedInUser = user;
+        setLoggedInUser(loggedInUser);
+        return loggedInUser.id;
+      }
     }
   }
   return false;

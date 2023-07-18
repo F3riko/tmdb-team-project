@@ -180,17 +180,21 @@ function SignUp({ showInitial, handleClose }) {
             addTakenUsername(formData[key].value);
             newUser[key] = formData[key].value;
           } else if (key === "voice") {
-            newUser[key] = formData[key]
-              ? formData[key]
-              : { name: "French Female" };
+            if (formData[key].value === "") {
+              newUser[key] = { name: "French Female" };
+            } else {
+              newUser[key] = formData[key].value;
+            }
           } else {
             newUser[key] = formData[key].value;
-            addTakenUsername(formData[key].value); 
+            addTakenUsername(formData[key].value);
           }
-          newUser[key] = formData[key].value;
         }
       }
     });
+    if (!newUser.homepage) {
+      newUser.homepage = "Upcoming";
+    }
     saveUserInLS(newUser);
     // Form to default and close
     setPaginationData((prevData) => ({
