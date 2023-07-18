@@ -9,14 +9,10 @@ function SingleMoviePage( ) {
     const { id } = useParams();
     const [ images, setImages ] = useState([]);
     const [ movieData, setMovieData ] = useState([]);
-<<<<<<< Updated upstream
     saveMovieInHistory(id)
 
     const [ reviews, setReviews ] = useState([]);
 
-=======
-    const [ reviews, setReviews ] = useState([]);
->>>>>>> Stashed changes
 
     useEffect(
         () => {
