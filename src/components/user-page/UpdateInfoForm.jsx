@@ -135,13 +135,12 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
         }
       }
 
-      // Send data to server
+      // Send data to server and reset form
 
       updateUserInfo(updatedUserData);
       setUser(getLoggedInUser());
       setFormData(defaultFormData);
     }
-    console.log(localStorage)
   };
 
   const ButtonReset = (fieldId) => {
@@ -267,7 +266,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
           onBlur={() => handleTypeHeadBlur("voice")}
           id="voice"
           options={voices}
-          placeholder="Preferable voice"
+          placeholder="Preferred voice"
           labelKey="name"
           defaultInputValue={user.voice.name}
         />
