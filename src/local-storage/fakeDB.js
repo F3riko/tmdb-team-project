@@ -76,6 +76,9 @@ export const updateUserInfo = (newUserInfo) => {
 };
 
 export const saveMovieInUserHistory = (movieId) => {
-  
-  if (movieId && )
-}
+  const user = getUsersFromLS();
+
+  // if (movieId && ) {
+
+  // }
+};
