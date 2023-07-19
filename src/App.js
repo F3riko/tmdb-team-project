@@ -22,6 +22,7 @@ import AuthRequired from "./components/user-page/AuthRequired";
 import MainPage from "./components/MainPage";
 import SingleMoviePage from "./components/DedicatedMoviePage";
 import {getLoggedInUser} from './local-storage/fakeDB'
+import './styles/MainStyle.css'
 
 // The following components are placeholder for testing and demo purposes,
 // when the specified components are ready the placeholder should have been replaced
