@@ -38,6 +38,12 @@ function loadingState(loadingstate){
     setSearchResults(searchResults); /* save it to search results state */
  };
 
+ async function getGenres(genreID) {
+    const url = 'https://api.themoviedb.org/3/genre/movie/list';
+    const genres = await fetchFunction(url);
+    return genres;
+ }
+
 /* Get url */
 function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id, fetchImages = false){
     const baseUrl = `https://api.themoviedb.org/3/`;
@@ -85,5 +91,6 @@ export {
     fetchFunction, 
     getUrl, 
     loadingState, 
-    handleSearch, 
+    handleSearch,
+    getGenres 
 };
