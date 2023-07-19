@@ -11,6 +11,7 @@ const MainPage = ({ homeList, homeType, user}) => {
   const [genreList, setGenreList] = useState(false);
   const genre = user ? (user.genre ? user.genre : false) : false
   const genres = getGenres();
+  console.log(genres);
   useEffect(() => {
     if (genre){
       const genreURL = getUrl({selectedGenre:genre});
