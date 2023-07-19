@@ -91,7 +91,9 @@ function App() {
             setQuery={setQuery}
             setSearchResults={setSearchResults} 
             selectedGenre={selectedGenre}
-            selectedLanguages={selectedLanguages} />}>
+            selectedLanguages={selectedLanguages} 
+            user={user}
+            setUser={setUser}/>}>
           <Route index element={<MainPage
                                   homeList={homeList}
                                   homeType={user ? user.homepage : "Upcoming"}

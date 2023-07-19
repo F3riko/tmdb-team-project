@@ -10,7 +10,7 @@ import {
   Link
 } from "react-router-dom";
 
-const Layout = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages}) => {
+const Layout = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages, user, setUser}) => {
   return (
     <>
       <Link to='..' className="our-logo h1">PAL Movie Database</Link>
@@ -20,7 +20,9 @@ const Layout = ({query, setQuery, setSearchResults, selectedGenre, selectedLangu
         setQuery={setQuery}
         setSearchResults={setSearchResults}
         selectedGenre={selectedGenre}
-        selectedLanguages={selectedLanguages}></NavComponent>
+        selectedLanguages={selectedLanguages}
+        user={user}
+        setUser={setUser}></NavComponent>
       </nav>
       <Outlet />
       <Footer />

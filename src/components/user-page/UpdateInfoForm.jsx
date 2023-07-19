@@ -45,6 +45,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       };
     });
   };
+
   const handleFieldBlur = (event) => {
     const { id } = event.target;
     if (formData[id].value) {
@@ -57,6 +58,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       }
     }
   };
+
   const renderErrors = (formDataKey) => {
     let errors;
     if (formData[formDataKey].errors) {
@@ -71,6 +73,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
     }
     return errors;
   };
+
   const handleTypeHeadChange = (value, id) => {
     setFormData((prevFormData) => {
       return {
@@ -79,6 +82,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       };
     });
   };
+
   const handleTypeHeadBlur = (id) => {
     if (formData[id].value) {
       const errors = validateInput(id, formData);
@@ -92,6 +96,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       }
     }
   };
+
   const validateField = (fieldId) => {
     const errors =
       fieldId === "passwordRepeat"
@@ -106,9 +111,9 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       return true;
     }
   };
+
   const handleSubmit = () => {
     let hasErrors = false;
-
     for (const fieldId in formData) {
       const fieldValue = formData[fieldId].value;
       if (fieldValue) {
@@ -118,7 +123,7 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
         }
       }
     }
-
+    
     if (!hasErrors) {
       // Create new user
       const updatedUserData = {
@@ -136,7 +141,6 @@ const UpdateInfoForm = ({ user, setUser, homeListType, setHomeListType }) => {
       }
 
       // Send data to server and reset form
-
       updateUserInfo(updatedUserData);
       setUser(getLoggedInUser());
       setFormData(defaultFormData);
