@@ -2,19 +2,22 @@ import MovieGallery from "./MovieGallery";
 import {fetchFunction, getGenres} from "../functions/fetch-functions"
 import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from "react";
 import { loadingState } from "../functions/fetch-functions";
+import { genresIds } from "../sing-up-flow/formValidations";
 
-
-const MainPage = ({ homeList, homeType, user}) => {
+const MainPage = ({ homeList, homeType, user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState(false);
-  const genre = user ? (user.genre ? user.genre : false) : false
-  const genres = getGenres();
+  const genre = user
+    ? user.genre
+      ? [String(genresIds[user.genre])]
+      : false
+    : false;
   console.log(genre)
   useEffect(() => {
     if (genre){
-      const genreURL = getUrl(null, genreList, null, null, null, false);
+      const genreURL = getUrl(null, genre, null, null, null, false);
       fetchFunction(genreURL)
       .then((movies) => {
         setGenreList(movies);
@@ -29,12 +32,11 @@ const MainPage = ({ homeList, homeType, user}) => {
   loadingState(isLoading);
   return (
     <>
-      <h1>Main page</h1>
       <MovieGallery moviesList={homeList} listType={homeType}></MovieGallery>
       {genreList ? 
         <MovieGallery
           moviesList={genreList}
-          listType={genres[genre]}/>
+          listType={user.genre}/>
         : <></>
       }
     </>
