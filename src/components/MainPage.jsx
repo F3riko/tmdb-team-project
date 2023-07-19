@@ -11,10 +11,11 @@ const MainPage = ({ homeList, homeType, user}) => {
   const [genreList, setGenreList] = useState(false);
   const genre = user ? (user.genre ? user.genre : false) : false
   const genres = getGenres();
+  console.log(genre)
   useEffect(() => {
     if (genre){
-      const genreURL = getUrl({selectedGenre:genre});
-    fetchFunction(genreURL)
+      const genreURL = getUrl(null, genreList, null, null, null, false);
+      fetchFunction(genreURL)
       .then((movies) => {
         setGenreList(movies);
         setIsLoading(false);

@@ -93,7 +93,7 @@ export const genres = [
   "Family",
   "Fantasy",
   "History",
-  "Horror",
+  "27",
   "Music",
   "Mystery",
   "Romance",
