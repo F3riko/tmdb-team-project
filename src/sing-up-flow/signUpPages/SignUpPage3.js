@@ -9,7 +9,7 @@ const SignUpPage3 = ({ handleFieldChange, formData }) => {
         <Form.Label>
           What movies would you like to see on your homepage?
         </Form.Label>
-        {["Most Popular", "Top Rater", "Upcoming"].map((option) => {
+        {["Most Popular", "Top Rated", "Upcoming"].map((option) => {
           return (
             <Form.Check
               checked={formData.homepage.value === option ? true : false}
