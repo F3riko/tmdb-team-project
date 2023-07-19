@@ -203,9 +203,9 @@ function SingleMoviePage({ user }) {
                         <ViewHistoryGallery movies={moviesFromHistory} />
                     )}
                 </Row>
-                <Row>
-                    <Container className="galery-container">
-                        <div className="col gallery-container">
+                <Row className="d-flex justify-content-center align-items-center">
+                    <Container className="m-3 gallery-container">
+                        <div className="">
                             {images &&
                                 images.map((image) => (
                                     <img
@@ -221,11 +221,11 @@ function SingleMoviePage({ user }) {
                     </Container>
                 </Row>
                 <Row>
-                    <Container className="">
-                        <div className="col reviews-container">
+                    <Container className="p-5 review-container">
+                        <div className="col reviews-element">
                             {reviews &&
                                 reviews.map((review) => (
-                                    <div key={review.id} className="review-container p-5 w-75">
+                                    <div key={review.id} className="review-element p-3">
                                         <p>
                                             <strong> user: </strong> {review.author}
                                         </p>

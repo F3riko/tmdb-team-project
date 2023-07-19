@@ -35,7 +35,7 @@ const UserPage = ({ user, setUser }) => {
     };
 
     fetchMoviesFromHistory();
-  }, [user.viewHistory, moviesFromHistory]);
+  }, [user.viewHistory]);
 
   return (
     <Container fluid>

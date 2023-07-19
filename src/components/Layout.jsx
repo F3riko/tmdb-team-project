@@ -13,7 +13,6 @@ import {
 const Layout = ({query, setQuery, setSearchResults, selectedGenre, selectedLanguages, user, setUser}) => {
   return (
     <>
-      <Link to='..' className="our-logo h1">PAL Movie Database</Link>
       <nav>
         <NavComponent 
         query={query}
