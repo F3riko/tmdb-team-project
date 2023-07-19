@@ -32,11 +32,17 @@ function loadingState(loadingstate){
 };
 
 /* Handle search: */
- async function handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear) {
-    let url = getUrl(query, selectedGenre, selectedLanguages, selectedYear); /* gets the query from the state, makes the fetch url based on it */
-    const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
-    setSearchResults(searchResults); /* save it to search results state */
- };
+async function handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear) {
+let url = getUrl(query, selectedGenre, selectedLanguages, selectedYear); /* gets the query from the state, makes the fetch url based on it */
+const searchResults = await fetchFunction(url); /* fetch data, with the queried url  */
+setSearchResults(searchResults); /* save it to search results state */
+};
+
+async function getGenres() {
+const url = 'https://api.themoviedb.org/3/genre/movie/list';
+const genres = await fetchFunction(url);
+return genres;
+}
 
 /* Get url */
 function getUrl(query, selectedGenre, selectedLanguages, selectedYear, id, fetchImages = false){
@@ -85,5 +91,6 @@ export {
     fetchFunction, 
     getUrl, 
     loadingState, 
-    handleSearch, 
+    handleSearch,
+    getGenres 
 };

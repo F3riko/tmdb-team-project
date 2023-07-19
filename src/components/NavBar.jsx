@@ -28,9 +28,10 @@ const NavComponent = ({
   setSearchResults,
   selectedGenre,
   selectedLanguages,
+  user,
+  setUser
 }) => {
   // Sign-up-login-flow: sign up flow
-  const [currentUser, setCurrentUser] = useState(getLoggedInUser());
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
@@ -77,18 +78,18 @@ const NavComponent = ({
       );
       if (loggedInId) {
         setLoginData(defaultLoginData);
-        setCurrentUser(getLoggedInUser());
+        setUser(getLoggedInUser());
       } else {
         handleShowError();
       }
     }
   };
 
-  const UserLoggedInProfile = ({ currentUser }) => {
+  const UserLoggedInProfile = ({ user }) => {
     return (
       <div className="d-flex justify-content-center align-items-center mt-1">
-        <span className="nav-profile-text">Hello, {currentUser.username}!</span>
-        <Link to={`user/${currentUser.id}`}>
+        <span className="nav-profile-text">Hello, {user.username}!</span>
+        <Link to={`user/${user.id}`}>
           <Image className="nav-image-thumbnail" src="/user.png" />
         </Link>
         <FontAwesomeIcon
@@ -98,7 +99,7 @@ const NavComponent = ({
           className="nav-exit-icon"
           onClick={() => {
             logOutUser();
-            setCurrentUser(getLoggedInUser());
+            setUser(getLoggedInUser());
           }}
         />
       </div>
@@ -108,9 +109,6 @@ const NavComponent = ({
   return (
     <Container className="navBar" id="nav-bar">
       <Row>
-        <Col>
-        <p><strong>Home</strong></p>
-        </Col>
         <Col className="m-1">
           <Form controlid="search">
             <Stack direction="horizontal" gap={2}>
@@ -128,8 +126,8 @@ const NavComponent = ({
         </Col>
         <Col>{/* This is the middle column, which resizes */}</Col>
         <Col md="auto">
-          {currentUser && currentUser.username ? (
-            <UserLoggedInProfile currentUser={currentUser} />
+          {user && user.username ? (
+            <UserLoggedInProfile user={user} />
           ) : (
             <Form controlid="login">
               <Row className="g-2 justify-content-md-right">

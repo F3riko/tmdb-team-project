@@ -1,5 +1,5 @@
 import MovieGallery from "./MovieGallery";
-import { fetchFunction } from "../functions/fetch-functions";
+import {fetchFunction, getGenres} from "../functions/fetch-functions"
 import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const MainPage = ({ homeList, homeType, user }) => {
       ? [String(genresIds[user.genre])]
       : false
     : false;
+  const genres = getGenres();
   useEffect(() => {
     if (genre) {
       const genreURL = getUrl({ selectedGenre: genre });
@@ -33,11 +34,12 @@ const MainPage = ({ homeList, homeType, user }) => {
     <>
       <h1>Main page</h1>
       <MovieGallery moviesList={homeList} listType={homeType}></MovieGallery>
-      {genreList ? (
-        <MovieGallery moviesList={genreList} listType={genre} />
-      ) : (
-        <></>
-      )}
+      {genreList ? 
+        <MovieGallery
+          moviesList={genreList}
+          listType={genres.filter(g => g.id === genre)}/>
+        : <></>
+      }
     </>
   );
 };
