@@ -33,7 +33,7 @@ const MainPage = ({ homeList, homeType, user}) => {
       {genreList ? 
         <MovieGallery
           moviesList={genreList}
-          listType={genres[genre]}/>
+          listType={genres.filter(g => g.id === genre)}/>
         : <></>
       }
     </>
