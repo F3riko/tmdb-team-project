@@ -1,5 +1,5 @@
 import MovieGallery from "./MovieGallery";
-import {fetchFunction} from "../functions/fetch-functions"
+import {fetchFunction, getGenres} from "../functions/fetch-functions"
 import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
 import {useEffect, useState} from 'react';
@@ -10,6 +10,7 @@ const MainPage = ({ homeList, homeType, user}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState(false);
   const genre = user ? (user.genre ? user.genre : false) : false
+  const genres = getGenres();
   useEffect(() => {
     if (genre){
       const genreURL = getUrl({selectedGenre:genre});
@@ -32,7 +33,7 @@ const MainPage = ({ homeList, homeType, user}) => {
       {genreList ? 
         <MovieGallery
           moviesList={genreList}
-          listType={genre}/>
+          listType={genres[genre]}/>
         : <></>
       }
     </>
