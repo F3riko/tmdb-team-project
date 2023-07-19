@@ -16,23 +16,22 @@ const MainPage = ({ homeList, homeType, user }) => {
     : false;
   
   useEffect(() => {
-    if (genre) {
-      const genreURL = getUrl({ selectedGenre: genre });
+    if (genre){
+      const genreURL = getUrl(null, genre, null, null, null, false);
       fetchFunction(genreURL)
-        .then((movies) => {
-          setGenreList(movies);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log("Error fetching the movies", error);
-          setIsLoading(false);
-        });
+      .then((movies) => {
+        setGenreList(movies);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error fetching the movies", error);
+        setIsLoading(false);
+      });
     }
   }, [user]);
   loadingState(isLoading);
   return (
     <>
-      <h1>Main page</h1>
       <MovieGallery moviesList={homeList} listType={homeType}></MovieGallery>
       {genreList ? 
         <MovieGallery

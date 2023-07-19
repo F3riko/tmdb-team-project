@@ -3,5 +3,18 @@
 }
 
 .review-container {
+    background-color:  darkslategray;
+}
+
+.review-element {
     background-color: black;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    color:  darkslategray
+}
+
+.gallery-container {
+    background-color: black;
+    border-radius: 15px;
+    margin-bottom: 15px;
 }

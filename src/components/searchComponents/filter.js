@@ -24,6 +24,7 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
 
       useEffect(() => {
         handleSearch(query, setSearchResults, selectedGenre, selectedLanguages, selectedYear);
+        console.log(selectedGenre)
     }, [query, selectedGenre, selectedLanguages, selectedYear]);
 
     return (
@@ -35,6 +36,7 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
             </Row>
             <Row>
                 <Accordion defaultActiveKey="">
+                    <Accordion.Item eventKey="0">
                         <Accordion.Item eventKey="0">
                             <Accordion.Header className="d-flex align-items-start m-2" > Select Genre: </Accordion.Header>
                             <Accordion.Body>
@@ -67,6 +69,8 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                                 </Form>
                             </Accordion.Body>
                         </Accordion.Item>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
                         <Accordion.Item eventKey="1">
                             <Accordion.Header className="d-flex align-items-start m-2" > Select Language: </Accordion.Header>
                             <Accordion.Body>
@@ -99,6 +103,7 @@ function FilterBar( { handleSearch, setSearchResults, query, setQuery, selectedG
                                     </div>
                                 </Form>
                             </Accordion.Body>
+                        </Accordion.Item>
                     </Accordion.Item>
                     <Accordion.Item eventKey="2">
                         <Accordion.Header className="d-flex align-items-start m-2" > Relase year: </Accordion.Header>

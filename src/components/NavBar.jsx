@@ -109,6 +109,9 @@ const NavComponent = ({
   return (
     <Container className="navBar" id="nav-bar">
       <Row>
+        <Col>
+        <Link to='..' className="our-logo h1"> PALMD </Link>
+        </Col>
         <Col className="m-1">
           <Form controlid="search">
             <Stack direction="horizontal" gap={2}>

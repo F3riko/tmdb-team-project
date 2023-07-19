@@ -30,7 +30,7 @@ const FilterViewHistoryBar = ({
     { name: "Western", id: 37 },
   ];
 
-  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState('');
   const [rating, setRating] = useState(0);
   const [year, setYear] = useState("");
 
