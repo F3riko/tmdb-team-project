@@ -14,8 +14,7 @@ const MainPage = ({ homeList, homeType, user }) => {
       ? [String(genresIds[user.genre])]
       : false
     : false;
-  const genres = getGenres();
-  console.log(genres);
+  
   useEffect(() => {
     if (genre) {
       const genreURL = getUrl({ selectedGenre: genre });
@@ -38,7 +37,7 @@ const MainPage = ({ homeList, homeType, user }) => {
       {genreList ? 
         <MovieGallery
           moviesList={genreList}
-          listType={genres.filter(g => g.id === genre)}/>
+          listType={user.genre}/>
         : <></>
       }
     </>
