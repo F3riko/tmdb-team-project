@@ -2,28 +2,32 @@ import MovieGallery from "./MovieGallery";
 import {fetchFunction, getGenres} from "../functions/fetch-functions"
 import { getUrl } from "../functions/fetch-functions";
 import { Button } from "react-bootstrap";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from "react";
 import { loadingState } from "../functions/fetch-functions";
+import { genresIds } from "../sing-up-flow/formValidations";
 
-
-const MainPage = ({ homeList, homeType, user}) => {
+const MainPage = ({ homeList, homeType, user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [genreList, setGenreList] = useState(false);
-  const genre = user ? (user.genre ? user.genre : false) : false
+  const genre = user
+    ? user.genre
+      ? [String(genresIds[user.genre])]
+      : false
+    : false;
   const genres = getGenres();
   console.log(genres);
   useEffect(() => {
-    if (genre){
-      const genreURL = getUrl({selectedGenre:genre});
-    fetchFunction(genreURL)
-      .then((movies) => {
-        setGenreList(movies);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error fetching the movies", error);
-        setIsLoading(false);
-      });
+    if (genre) {
+      const genreURL = getUrl({ selectedGenre: genre });
+      fetchFunction(genreURL)
+        .then((movies) => {
+          setGenreList(movies);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log("Error fetching the movies", error);
+          setIsLoading(false);
+        });
     }
   }, [user]);
   loadingState(isLoading);
